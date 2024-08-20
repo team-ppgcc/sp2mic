@@ -1,0 +1,45 @@
+@import '../../../styles/_app-variables.scss';
+@import '../../../styles/_app-mixins.scss';
+
+.app-box.app-box-highlight {
+  border-top: none;
+  margin-bottom: px2em(0);
+  padding-left: px2em(0);
+  padding-right: px2em(0);
+  width: 100%;
+  height: 25px;
+}
+
+//.banners {
+//  padding: 0;
+//  display: flex;
+//  border: 1px solid transparent;
+//}
+//
+//.img-logo-gesad {
+//  width: 3cm;
+//  height: 0.9cm;
+//  //padding: 0.5%;
+//  margin-left: 15px;
+//  margin-top: 5px;
+//}
+//
+//.img-logo-ppgcc {
+//  width: 4cm;
+//  height: 1.1cm;
+//  //padding: 0.5%;
+//  margin-left: 40px;
+//  margin-top: 2px;
+//}
+//
+//.img-logo-uece {
+//  width: 3.2cm;
+//  height: 1.1cm;
+//  //padding: 0.4%;
+//  margin-left: 40px;
+//  margin-top: 1px;
+//}
+
+.space-height {
+  height: 5cm;
+}

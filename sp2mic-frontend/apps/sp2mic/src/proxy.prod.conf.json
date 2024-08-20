@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "http://sp2mic-api.stacktecnologia.com.br",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

@@ -1,0 +1,12 @@
+<div class="custom-modalbox">
+  <div>
+    <mat-progress-spinner class="mat-progress" color="primary" diameter="30" mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
+  <div *ngIf="data && data.length > 0" class="spacer"></div>
+  <div *ngIf="data && data.length > 0" class="espaco">
+    <p *ngFor="let texto of data">
+      {{ texto }}
+    </p>
+  </div>
+</div>

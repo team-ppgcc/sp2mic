@@ -1,0 +1,18 @@
+<div class="custom-class">
+  <header class="app-page-header">
+    <h1 class="app-use-case">DtoClasse</h1>
+    <h2 class="app-page-title">View</h2>
+    <h2 class="app-page-title">{{ dtoClasse.noDtoClasse }}</h2>
+  </header>
+  <section class="app-box">
+    <div class="app-grid-4-colunas-mescladas">
+    <textarea class="app-box-view form-control" disabled id="txDtoClasse" name="txDtoClasse">
+      {{ dtoClasse.txDtoClasse }}
+    </textarea>
+    </div>
+    <footer>
+    <button *ngIf="data.modal" (click)="close()" appBtn icon="fas fa-window-close" label="Close">
+    </button>
+      </footer>
+  </section>
+</div>

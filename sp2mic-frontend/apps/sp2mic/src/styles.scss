@@ -1,0 +1,83 @@
+@import 'app/styles/app-style';
+@import 'app/styles/app-widgets';
+@import '@angular/cdk/overlay-prebuilt.css';
+@import 'app/styles/custom-angular-material';
+@import 'app/styles/custom-mat-checkbox';
+@import 'app/styles/_mat-elevation.css';
+@import '@fortawesome/fontawesome-free/css/all.css';
+@import 'node_modules/ngx-ui-switch/ui-switch.component';
+
+.switch {
+  margin-right: 10px;
+  margin-bottom: -10px;
+}
+
+//.positionClass {
+//  margin-top: 30px !important;
+//}
+
+.app-btn[disabled] {
+  cursor: not-allowed !important;
+}
+
+/*Css para apresentação do Situacao Analisada em todas as telas de consulta onde tem o campo Analisado*/
+span.analisado {
+  color: white;
+  background-color: #458B00;
+  border-radius: 2px;
+  margin-bottom: 2px;
+  padding-right: 18px;
+  padding-left: 18px;
+}
+
+/*Css para apresentação do Situaca Não Analisada em todas as telas de consulta onde tem o campo Analisado*/
+span.nao-analisado {
+  color: white;
+  background-color: indianred; //#ab4242;
+  border-radius: 2px;
+  margin-bottom: 2px;
+  padding-right: 13px;
+  padding-left: 13px;
+}
+
+.titulo {
+  font-family: 'Source Sans Pro', sans-serif, Verdana, Geneva, Tahoma;
+}
+
+hr.modal {
+  margin-top: -5px;
+  margin-bottom: 30px;
+  border: 1px solid $themeColor;
+}
+
+hr.modal-confirmacao {
+  margin-top: -6px;
+  border: 1px solid $themeColor;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked {
+  border-color: $themeColor;
+}
+
+.mat-radio-button.mat-accent {
+  color: $themeColor;
+  background-color: $themeColor;
+}
+
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  background-color: rgb(255, 37, 37, .26);
+}
+
+.mat-radio-button {
+  margin-right: 10px;;
+}
+
+.scroll {
+  width: 98%;
+  overflow: auto;
+}
+
+.custom-class {
+  padding-left: 10px;
+  padding-right: 10px;
+}

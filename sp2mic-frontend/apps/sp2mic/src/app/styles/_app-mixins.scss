@@ -1,0 +1,175 @@
+@use 'sass:math';
+
+// Centralizar
+@mixin push--auto {
+  margin: {
+    left: auto;
+    right: auto;
+  }
+}
+
+// Utilizaação :after e :before
+@mixin pseudo($display: block, $pos: absolute, $content: ' ') {
+  content: $content;
+  display: $display;
+  position: $pos;
+}
+
+@mixin responsive-ratio($x,$y, $pseudo: false) {
+  $padding: unquote(( $y / $x ) * 100 + '%');
+  @if $pseudo {
+    &:before {
+      @include pseudo($pos: relative);
+      width: 100%;
+      padding-top: $padding;
+    }
+  } @else {
+    padding-top: $padding;
+  }
+}
+
+// TRIANGULOS
+@mixin css-triangle($color, $direction, $size: 6px, $position: absolute, $round: false) {
+  @include pseudo($pos: $position);
+  width: 0;
+  height: 0;
+  @if $round {
+    border-radius: 3px;
+  }
+  @if $direction == down {
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+    border-top: $size solid $color;
+    margin-top: 0 - round( $size / 2.5 );
+  } @else if $direction == up {
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+    border-bottom: $size solid $color;
+    margin-bottom: 0 - round( $size / 2.5 );
+  } @else if $direction == right {
+    border-top: $size solid transparent;
+    border-bottom: $size solid transparent;
+    border-left: $size solid $color;
+    margin-right: -$size;
+  } @else if $direction == left {
+    border-top: $size solid transparent;
+    border-bottom: $size solid transparent;
+    border-right: $size solid $color;
+    margin-left: -$size;
+  }
+}
+
+$fa: 900;
+$fas: 900;
+$far: 400;
+$fab: 400;
+@mixin font-awesome($icon-lib: $fas, $icon-utf-code: "") {
+  font-weight: $icon-lib;
+  content: $icon-utf-code;
+
+  font-family: "Font Awesome 5 Free", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+  font-size: inherit;
+}
+
+// https://engageinteractive.co.uk/blog/top-10-scss-mixins
+$deviceBreakpoints: (
+        "phone": (1px 768px),
+        "xs": (1px 768px),
+        "tablet": (768px 992px),
+        "sm": (768px 992px),
+        "desktop": (992px 10000px),
+        "md": (992px 10000px)
+);
+
+// original @mixin mq($width, $type: min) {
+@mixin device($device, $type: "min") {
+  @if map_has_key($deviceBreakpoints, $device) {
+    $breakpointDef: map_get($deviceBreakpoints, $device);
+    $dev-min-width: nth($breakpointDef, 1);
+    $dev-max-width: nth($breakpointDef, 2);
+
+    @if $type == "min" {
+      @media only screen and (min-width: $dev-min-width) {
+        @content;
+      }
+    }
+
+    @if $type == "only" {
+      @media only screen and (min-width: $dev-min-width) and (max-width: $dev-max-width - 1px) {
+        @content;
+      }
+    }
+
+    @if $type == "except" {
+      @media screen and (min-width: $dev-max-width), screen and (max-width: $dev-min-width - 1px) {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin truncate($truncation-boundary) {
+  max-width: $truncation-boundary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin vertical-center {
+  position: relative;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  //-webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+@function px2em($px, $base:14) {
+  @return (math.div($px, $base)) * 1em;
+}
+
+@mixin box-shadow($left: px2em(3), $top: px2em(3), $blur: px2em(8), $size: px2em(1), $color: rgba(0,0,0,0.2), $inset: null) {
+  box-shadow: $left $top $blur $size $color $inset;
+}
+
+@mixin prototype($min-width: 1em, $min-height: 1em) {
+  content: '';
+  min-width: 1em;
+  $min-height: 1em;
+  border: 1px dashed rgba(0, 0, 0, 0.5);
+}
+
+
+@mixin radial-gradient($from, $to) {
+  background: radial-gradient(circle, $from 0%, $to 100%);
+
+}
+
+@mixin inline-flex-list() {
+  display: flex;
+  flex-flow: wrap;
+  list-style-type: none;
+  padding: .5em .75em;
+  margin: .75em 0;
+  border-radius: px2em(4);
+  align-items: baseline;
+}
+
+@mixin anti-aliasing() {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+@mixin hover-active-focus() {
+  &:hover,
+  &:active,
+  &:focus {
+    @content;
+  }
+}

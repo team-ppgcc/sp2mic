@@ -1,0 +1,15 @@
+<nav role="navigation">
+  <ol>
+    <li>
+      <a [routerLink]="['']" class="goto" matTooltip="Back to home page" matTooltipClass="tooltip">
+        <app-icon class="icone-home" name="fa-home"></app-icon>
+      </a>
+    </li>
+
+    <ng-content></ng-content>
+
+    <li>
+      <span>{{ currentLabel }}</span>
+    </li>
+  </ol>
+</nav>

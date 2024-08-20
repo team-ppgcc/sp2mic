@@ -1,0 +1,23 @@
+@import '../../../../app/styles/_custom-angular-material.scss';
+@import '../../../../app/styles/_app-variables.scss';
+
+.spacer {
+  height: 20px;
+  padding-top: 20px;
+}
+
+.mat-progress {
+  margin-top: 10%;
+  margin-left: 45%;
+}
+
+.custom-modalbox {
+  font-family: 'Source Sans Pro', sans-serif, Verdana, Geneva, Tahoma;
+  font-size: 17px;
+  border-radius: 6px;
+}
+
+.espaco {
+  margin-top: -20px;
+  margin-left: 40px;
+}

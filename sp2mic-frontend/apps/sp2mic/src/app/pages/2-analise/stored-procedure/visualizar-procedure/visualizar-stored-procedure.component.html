@@ -1,0 +1,27 @@
+<app-breadcrumb *ngIf="!data.modal" currentLabel="View">
+  <app-crumb label="Stored Procedure Search" order="1" route="/analysis/stored-procedure"></app-crumb>
+</app-breadcrumb>
+<div class="custom-class">
+  <header class="app-page-header">
+    <h1 class="app-use-case">Stored Procedure</h1>
+    <h2 class="app-page-title">View</h2>
+    <h2 class="app-page-title">{{ storedProcedure.noStoredProcedure }}</h2>
+  </header>
+  <section class="app-box">
+    <div class="app-grid-4-colunas-mescladas">
+    <textarea class="app-box-view form-control" disabled id="txDefinicaoTratada" name="txDefinicaoTratada">
+      {{storedProcedure.txDefinicaoTratada}}
+    </textarea>
+    </div>
+<!--    <div class="app-box-body">-->
+    <footer>
+      <button *ngIf="!data.modal" [routerLink]="['/analysis/stored-procedure/edit/', storedProcedure.id]" appBtn
+              icon="fa-reply"
+              label="Return">
+      </button>
+      <button *ngIf="data.modal" (click)="close()" appBtn icon="fas fa-window-close" label="Close">
+      </button>
+      </footer>
+<!--    </div>-->
+  </section>
+</div>

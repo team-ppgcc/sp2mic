@@ -1,0 +1,88 @@
+<app-breadcrumb currentLabel="File Upload"></app-breadcrumb>
+<div class="custom-class">
+  <header class="app-page-header"><h1 class="app-use-case">Stored Procedures Loading and Processing</h1>
+    <h2 class="app-page-title">Search File Uploaded</h2></header>
+
+  <section class="app-box">
+    <form #formArquivo="ngForm">
+      <mat-accordion [togglePosition]="'before'">
+        <mat-expansion-panel (afterExpand)="aposExpandirArquivo()" [expanded]="expandiuArquivo">
+          <mat-expansion-panel-header>
+            <mat-panel-title><h3 class="app-filter-title">Files Uploaded filters</h3></mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="app-box-body app-grid">
+            <mat-form-field>
+              <mat-label>Stored Procedure</mat-label>
+              <input [(ngModel)]="cargaDtoArquivo.nomeProcedure" autocomplete="off" id="storedProcedureNameArquivo"
+                     matInput
+                     maxlength="200" name="storedProcedureNameArquivo" type="text">
+              <mat-error>Required field</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Database Schema</mat-label>
+              <input [(ngModel)]="cargaDtoArquivo.schema" autocomplete="off" id="schemaArquivo" matInput
+                     maxlength="200" name="schemaArquivo" type="text">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Loaded</mat-label>
+              <mat-select [(ngModel)]="cargaDtoArquivo.snCarregada" id="combo-snLoaded" name="snLoaded">
+                <mat-option></mat-option>
+                <mat-option [value]="true">Yes</mat-option>
+                <mat-option [value]="false">No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <footer>
+        <button (click)="pesquisarArquivo()" [disabled]="formArquivo.invalid" appBtn class="primary-action"
+                icon="fa-search" id="btn-pesquisar-arquivo" label="Search"></button>
+        <button (click)="abrirModalSchema()" *ngIf="pesquisouArquivo" appBtn class="primary-action" icon="fa-building"
+                id="btn-carregar-arquivo" label="Process"></button>
+        <button (click)="limparFormularioArquivo(formArquivo)" appBtn class="secondary-action" icon="fa-eraser"
+                id="btn-limpar-arquivo" label="Clean"></button>
+        <button (click)="incluirArquivo()" appBtn class="primary-action" icon="fa-plus" id="btn-incluir-arquivo"
+                label="Upload"></button>
+        <button [routerLink]="'/load'" appBtn icon="fa-reply" label="Return"></button>
+      </footer>
+    </form>
+
+    <header *ngIf="pesquisouArquivo">Files Uploaded: {{ resultadoDataSourceArquivo.length }} file(s)</header>
+    <div [hidden]="resultadoDataSourceArquivo.length === 0 || !pesquisouArquivo" class="app-box-body scroll">
+      <table [dataSource]="dataSourceArquivo" [hidden]="resultadoDataSourceArquivo.length === 0 || !pesquisouArquivo"
+             aria-label="Tabela de Stored Procedures" class="app-datatable align-center" mat-table matSort matSortDisableClear>
+        <tr *matHeaderRowDef="displayedColumnsArquivo" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumnsArquivo;" mat-row></tr>
+        <ng-container matColumnDef="checado">
+          <th *matHeaderCellDef id="colunaSelecionarTodosUpload" mat-header-cell>
+            <mat-checkbox (click)="selecionarTodasProceduresArquivo()" [(ngModel)]="selecionarTodosArquivo"
+                          color="primary" name="selecionarTodos"></mat-checkbox>
+          </th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <mat-checkbox [(ngModel)]="row.checado" color="primary" name="selecionar_{{ i }}"></mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="snCarregada">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Loaded</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['edit', row.id]" id="col-0-edit_storedProcedure{{ i }}">
+              <span *ngIf="row.snCarregada" class="analisado">{{ rotuloBoolean(row.snCarregada) }}</span>
+              <span *ngIf="!row.snCarregada" class="nao-analisado">{{ rotuloBoolean(row.snCarregada) }}</span>
+            </a>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="nome">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Stored Procedures</th>
+          <td *matCellDef="let row" mat-cell ngDefaultControl>{{ row.nome }}</td>
+        </ng-container>
+      </table>
+      <div [hidden]="resultadoDataSourceArquivo.length === 0">
+        <mat-paginator #paginatorArquivo [pageSizeOptions]="opcoesTamanhoPagina" [pageSize]="tamanhoPaginaPadrao"
+                       showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+    <div *ngIf="resultadoDataSourceArquivo.length === 0 && pesquisouArquivo" class="app-empty-search-result"
+         role="alert"><span>No record found.</span>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,261 @@
+<app-breadcrumb [currentLabel]="labelTitle">
+  <app-crumb label="Stored Procedure Search" order="1" route="/analysis/dto-classe"></app-crumb>
+</app-breadcrumb>
+<div class="custom-class">
+  <header class="app-page-header"><h1 class="app-use-case">Stored Procedure</h1>
+    <h2 class="app-page-title">{{ labelTitle }}</h2></header>
+  <section class="app-box">
+    <form #storedProcedureForm="ngForm" ngForm>
+      <header>Fill in the fields</header>
+
+      <div class="app-box-body app-grid">
+        <mat-form-field>
+          <mat-label>Stored Procedure</mat-label>
+          <input #noStoredProcedureFormControl="ngModel" [(ngModel)]="storedProcedure.noStoredProcedure"
+                 [disabled]="!solicitouEdicao" autocomplete="off" id="noStoredProcedure" matInput maxlength="200"
+                 name="noStoredProcedureFormControl" required type="text" (blur)="retirarEspacosEmBrancoNoStoredProcedure()">
+          <mat-error>Required field</mat-error>
+          <!--          <mat-error *ngIf="noStoredProcedureFormControl.invalid">--> <!--  pattern="[a-zA-Z0-9À-ú _.-]+" -->
+          <!--            {{ retornaMensagemDeErroCampoInvalido(noStoredProcedureFormControl) }}-->
+          <!--          </mat-error>-->
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Data Type Returned</mat-label>
+          <mat-select #coTipoDadoRetornoFormControl="ngModel" [(ngModel)]="storedProcedure.coTipoDadoRetorno"
+                      [disabled]="!solicitouEdicao" class="form-control" id="combo-tipoDadoRetorno"
+                      name="coTipoDadoRetornoFormControl" (ngModelChange)="setNoListReturned()" required>
+            <mat-option></mat-option>
+            <mat-option *ngFor="let tipo of valoresComboTipoDado; index as i" [value]=tipo.id>
+              {{ tipo.nome }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Required field</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="app-box-body app-grid">
+        <mat-form-field>
+          <mat-label>Database Schema</mat-label>
+          <input #noSchemaFormControl="ngModel" [(ngModel)]="storedProcedure.noSchema" [disabled]="!solicitouEdicao"
+                 autocomplete="off" class="form-control"
+                 id="noSchema" matInput maxlength="200" name="noSchemaFormControl"
+                 required type="text" (blur)="retirarEspacosEmBrancoNoSchema()">
+          <mat-error>Required field</mat-error>
+          <!--          <mat-error--> <!--                 pattern="[a-zA-Z0-9\-]+"-->
+          <!--            *ngIf="noSchemaFormControl.invalid">-->
+          <!--            {{ retornaMensagemDeErroCampoInvalido(noSchemaFormControl) }}-->
+          <!--          </mat-error>-->
+        </mat-form-field>
+        <mat-form-field *ngIf="storedProcedure.coTipoDadoRetorno == TipoDadoEnum.DTO">
+          <mat-label>DTO Class</mat-label>
+          <mat-select #idClasseRetornadaFormControl="ngModel" [(ngModel)]="storedProcedure.idDtoClasse"
+                      [disabled]="!solicitouEdicao || storedProcedure.coTipoDadoRetorno !== TipoDadoEnum.DTO"
+                      class="form-control" id="combo-classe"
+                      name="idClasseRetornadaFormControl" required>
+            <mat-option></mat-option>
+            <mat-option *ngFor="let valor of valoresComboDtoClassName; index as i" [value]=valor.id>
+              {{ valor.nome }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Required field</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>A list will be returned?</mat-label>
+          <mat-select #snRetornoListaFormControl="ngModel" [(ngModel)]="storedProcedure.snRetornoLista"
+                      [disabled]="!solicitouEdicao || storedProcedure.coTipoDadoRetorno === TipoDadoEnum.VOID"
+                      class="form-control" id="combo-snRetornoLista" name="snRetornoListaFormControl" required>
+            <mat-option></mat-option>
+            <mat-option [value]="true">Yes</mat-option>
+            <mat-option [value]="false">No</mat-option>
+          </mat-select>
+          <mat-error>Required field</mat-error>
+        </mat-form-field>
+
+      </div>
+<!--      <div class="app-box-body app-grid-4">-->
+<!--        <mat-form-field>-->
+<!--          <mat-label>Database Schema</mat-label>-->
+<!--          <input #noSchemaFormControl="ngModel" [(ngModel)]="storedProcedure.noSchema" [disabled]="!solicitouEdicao"-->
+<!--                 autocomplete="off" class="form-control"-->
+<!--                 id="noSchema" matInput maxlength="200" name="noSchemaFormControl"-->
+<!--                 required type="text" (blur)="retirarEspacosEmBrancoNoSchema()">-->
+<!--          <mat-error>Required field</mat-error>-->
+<!--&lt;!&ndash;          <mat-error&ndash;&gt; &lt;!&ndash;                 pattern="[a-zA-Z0-9\-]+"&ndash;&gt;-->
+<!--&lt;!&ndash;            *ngIf="noSchemaFormControl.invalid">&ndash;&gt;-->
+<!--&lt;!&ndash;            {{ retornaMensagemDeErroCampoInvalido(noSchemaFormControl) }}&ndash;&gt;-->
+<!--&lt;!&ndash;          </mat-error>&ndash;&gt;-->
+<!--        </mat-form-field>-->
+<!--        <mat-form-field>-->
+<!--          <mat-label>Data Type Returned</mat-label>-->
+<!--          <mat-select #coTipoDadoRetornoFormControl="ngModel" [(ngModel)]="storedProcedure.coTipoDadoRetorno"-->
+<!--                      [disabled]="!solicitouEdicao" class="form-control" id="combo-tipoDadoRetorno"-->
+<!--                      name="coTipoDadoRetornoFormControl" (ngModelChange)="setNoListReturned()" required>-->
+<!--            <mat-option></mat-option>-->
+<!--            <mat-option *ngFor="let tipo of valoresComboTipoDado; index as i" [value]=tipo.id>-->
+<!--              {{ tipo.nome }}-->
+<!--            </mat-option>-->
+<!--          </mat-select>-->
+<!--          <mat-error>Required field</mat-error>-->
+<!--        </mat-form-field>-->
+<!--        <mat-form-field>-->
+<!--          <mat-label>A list will be returned?</mat-label>-->
+<!--          <mat-select #snRetornoListaFormControl="ngModel" [(ngModel)]="storedProcedure.snRetornoLista"-->
+<!--                      [disabled]="!solicitouEdicao || storedProcedure.coTipoDadoRetorno === TipoDadoEnum.VOID"-->
+<!--                      class="form-control" id="combo-snRetornoLista" name="snRetornoListaFormControl" required>-->
+<!--            <mat-option></mat-option>-->
+<!--            <mat-option [value]="true">Yes</mat-option>-->
+<!--            <mat-option [value]="false">No</mat-option>-->
+<!--          </mat-select>-->
+<!--          <mat-error>Required field</mat-error>-->
+<!--        </mat-form-field>-->
+<!--&lt;!&ndash;        <mat-form-field>&ndash;&gt;-->
+<!--&lt;!&ndash;          <mat-label>Analyzed</mat-label>&ndash;&gt;-->
+<!--&lt;!&ndash;          <mat-select #snAnalisadaFormControl="ngModel" [(ngModel)]="storedProcedure.snAnalisada"&ndash;&gt;-->
+<!--&lt;!&ndash;                      [disabled]="!solicitouEdicao" class="form-control" id="combo-snAnalisada"&ndash;&gt;-->
+<!--&lt;!&ndash;                      name="snAnalisadaFormControl" required>&ndash;&gt;-->
+<!--&lt;!&ndash;            <mat-option></mat-option>&ndash;&gt;-->
+<!--&lt;!&ndash;            <mat-option [value]="true">Yes</mat-option>&ndash;&gt;-->
+<!--&lt;!&ndash;            <mat-option [value]="false">No</mat-option>&ndash;&gt;-->
+<!--&lt;!&ndash;          </mat-select>&ndash;&gt;-->
+<!--&lt;!&ndash;          <mat-error>Required field</mat-error>&ndash;&gt;-->
+<!--&lt;!&ndash;        </mat-form-field>&ndash;&gt;-->
+<!--      </div>-->
+<!--      <div class="app-box-body app-grid-2-colunas-mescladas">-->
+<!--        <mat-form-field>-->
+<!--          <mat-label>Stored Procedure</mat-label>-->
+<!--          <input #noStoredProcedureFormControl="ngModel" [(ngModel)]="storedProcedure.noStoredProcedure"-->
+<!--                 [disabled]="!solicitouEdicao" autocomplete="off" id="noStoredProcedure" matInput maxlength="200"-->
+<!--                 name="noStoredProcedureFormControl" required type="text" (blur)="retirarEspacosEmBrancoNoStoredProcedure()">-->
+<!--          <mat-error>Required field</mat-error>-->
+<!--&lt;!&ndash;          <mat-error *ngIf="noStoredProcedureFormControl.invalid">&ndash;&gt; &lt;!&ndash;  pattern="[a-zA-Z0-9À-ú _.-]+" &ndash;&gt;-->
+<!--          &lt;!&ndash;            {{ retornaMensagemDeErroCampoInvalido(noStoredProcedureFormControl) }}&ndash;&gt;-->
+<!--&lt;!&ndash;          </mat-error>&ndash;&gt;-->
+<!--        </mat-form-field>-->
+<!--        <mat-form-field *ngIf="storedProcedure.coTipoDadoRetorno == TipoDadoEnum.DTO">-->
+<!--          <mat-label>DTO Class</mat-label>-->
+<!--          <mat-select #idClasseRetornadaFormControl="ngModel" [(ngModel)]="storedProcedure.idDtoClasse"-->
+<!--                      [disabled]="!solicitouEdicao || storedProcedure.coTipoDadoRetorno !== TipoDadoEnum.DTO"-->
+<!--                      class="form-control" id="combo-classe"-->
+<!--                      name="idClasseRetornadaFormControl" required>-->
+<!--            <mat-option></mat-option>-->
+<!--            <mat-option *ngFor="let valor of valoresComboDtoClassName; index as i" [value]=valor.id>-->
+<!--              {{ valor.nome }}-->
+<!--            </mat-option>-->
+<!--          </mat-select>-->
+<!--          <mat-error>Required field</mat-error>-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+
+      <div *ngIf="!storedProcedure.snSucessoParser" class="app-grid-4-colunas-mescladas">
+        <mat-form-field>
+          <mat-label>Parser Failure</mat-label>
+          <textarea #txResultadoParserFormControl="ngModel" [(ngModel)]="storedProcedure.txResultadoParser"
+                    autocomplete="off" class="app-box-view form-control" disabled id="txResultadoParser" matInput
+                    name="txResultadoParser" rows="3">
+            </textarea>
+          <mat-error>Required field</mat-error>
+        </mat-form-field>
+      </div>
+
+      <footer>
+        <ui-switch (change)="habilitaEdicao($event)" [checked]="solicitouEdicao"></ui-switch>
+        <button (click)="abrirModalAlterarStoredProcedure()" [disabled]="storedProcedureForm.invalid"
+                [hidden]="(!solicitouEdicao)"
+                appBtn class="primary-action" icon="fa-save" label="Save" matTooltip="Save changes"></button>
+        <button (click)="viewProcedure()" *ngIf="!solicitouEdicao" appBtn icon="fa-file-code"
+                label="View" matTooltip="View source code"></button>
+        <button (click)="abrirModalDeletarStoredProcedure()" *ngIf="!solicitouEdicao" appBtn icon="fa-trash"
+                label="Delete" matTooltip="Delete Stored Procedure and Endponts"></button>
+        <button [routerLink]="['/analysis/stored-procedure']" appBtn icon="fa-reply"
+                label="Return" matTooltip="Return to stored procedure search"></button>
+      </footer>
+    </form>
+    <header>Endpoint list: {{ storedProcedure.endpoints?.length }} record(s)</header>
+    <div [hidden]="storedProcedure.endpoints?.length === 0" class="app-box-body scroll">
+      <table [dataSource]="dataSourceEndpoints" [hidden]="storedProcedure.endpoints?.length === 0"
+             aria-label="Endpoints Table"
+             class="app-datatable align-center" mat-table matSort matSortDisableClear>
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+
+        <ng-container class="colunaAnlisado" matColumnDef="snAnalisado">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Analyzed</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['../../../endpoint/edit', row.id, 'sp']"
+               id="col-0-edit_endpoint{{ i }}"> <span
+              *ngIf="row.snAnalisado" class="analisado">{{ rotuloBoolean(row.snAnalisado) }}</span> <span
+              *ngIf="!row.snAnalisado" class="nao-analisado">{{ rotuloBoolean(row.snAnalisado) }}</span> </a></td>
+        </ng-container>
+
+        <ng-container class="colunaTipoEndpoint" matColumnDef="noTipoSqlDml">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>SQL</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['../../../endpoint/edit', row.id, 'sp']"
+               id="col-1-edit_endpoint{{ i }}"> {{ row.noTipoSqlDml }}</a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="noTipoDadoRetorno">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Returned Type</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['../../../endpoint/edit', row.id, 'sp']"
+               id="col-2-edit_endpoint{{ i }}"> {{ row.noTipoDadoRetorno }}</a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="noMicrosservico">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Microservice</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['../../../endpoint/edit', row.id, 'sp']"
+               id="col-3-edit_endpoint{{ i }}">{{ row?.noMicrosservico }}</a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="noMetodoEndpoint">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Method Name</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a *ngIf="row.noMetodoEndpoint !== 'nomeAindaNaoDefinido'"
+               [routerLink]="['../../../endpoint/edit', row.id, 'sp']"
+               id="col-4-edit_endpoint{{ i }}">{{ row.noMetodoEndpoint }}</a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="noPath">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Path</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a *ngIf="row.noPath !== '/path-ainda-nao-definido'"
+               [routerLink]="['../../../endpoint/edit', row.id, 'sp']"
+               id="col-5-edit_endpoint{{ i }}">{{ row.noPath }}</a>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="tabelasAssociadas">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Tables</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['../../../endpoint/edit', row.id, 'sp']" id="col-6-edit_endpoint{{ i }}">
+              {{ row.tabelasAssociadas }}
+            </a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acao">
+          <th *matHeaderCellDef mat-header-cell></th>
+          <td *matCellDef="let row" mat-cell>
+            <button (click)="abrirModalVisualizarEndpoint(row.id)" class="primary-action" mat-icon-button
+                    matTooltip="View endpoint source code">
+              <mat-icon fontIcon="fa-file-code" fontSet="fa"></mat-icon>
+            </button>
+            <button (click)="confirmDialogDeleteEndpoint(row.id, row.noMetodoEndpoint)" class="primary-action" mat-icon-button
+                    matTooltip="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+      </table>
+      <div [hidden]="storedProcedure.endpoints?.length === 0">
+        <mat-paginator [pageSizeOptions]="opcoesTamanhoPagina" [pageSize]="tamanhoPaginaPadrao"
+                       showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+    <div *ngIf="storedProcedure.endpoints?.length === 0" class="app-empty-search-result" role="alert"><span>No record found.</span>
+    </div>
+  </section>
+</div>

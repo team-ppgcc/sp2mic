@@ -1,0 +1,18 @@
+package {{nomePacote}}.services;
+
+
+{%- for imp in imports -%}
+import {{imp -}};
+{%- endfor -%}
+import org.springframework.cloud.openfeign.FeignClient;
+
+
+@FeignClient(name = "{{nomeMicrosservico}}")
+public interface {{nomeMicrosservicoComInicialMaiuscula}}RestClientService {
+
+{%- for ep in endpoints -%}
+    {{ep.TipoHttpMapping}}("{{ep.Path}}{{ep.ParametrosPath}}")
+    public {{ep.RetornoMetodo}} {{ep.NomeMetodo}}({{ep.ParametrosController}});
+
+{%- endfor -%}
+}

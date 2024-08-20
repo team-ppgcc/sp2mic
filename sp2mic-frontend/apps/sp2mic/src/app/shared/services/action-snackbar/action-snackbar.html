@@ -1,0 +1,25 @@
+<mat-card class="card">
+  <div class="outline {{getBackground()}}">
+    <div class="inline">
+      <div class="icon-cabecalho">
+        <div class="{{getColor()}}">
+          <mat-icon>{{ getIcon() }}</mat-icon>
+        </div>
+        <div>
+          <mat-card-title class="titulo">{{ data.titulo || '' }}</mat-card-title>
+          <mat-card-subtitle class="subtitulo">{{ data.subtitulo || '' }}</mat-card-subtitle>
+        </div>
+      </div>
+      <mat-card-content class="conteudo">
+        <p *ngFor="let texto of data.textos">
+          {{ texto }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button (click)="executarPeloNomeDaAcao(acao.nome)" *ngFor="let acao of data.acoes"
+                mat-button>{{ acao.nome }}
+        </button>
+      </mat-card-actions>
+    </div>
+  </div>
+</mat-card>

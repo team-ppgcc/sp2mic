@@ -1,0 +1,31 @@
+@import '../../../../app/styles/_app-variables.scss';
+
+.generic-dialog{
+  max-width: 500px;
+  .mat-dialog-title{
+    border-bottom: 1px solid map-get($sp2mic-colors, divider);
+    color: map-get($sp2mic-colors, primary-dark);
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+  .mat-dialog-content{
+    margin-bottom: 2rem;
+  }
+  .mat-dialog-actions{
+    justify-content: flex-end;
+    button{
+      @extend %mat-action-button;
+    }
+  }
+}
+
+%mat-action-button{
+  background: transparent;
+  color: map-get($sp2mic-colors, primary);
+  font-family: 'RobotoBold', sans-serif;
+  height: 35px;
+  &:hover, &:focus{
+    background: map-get($sp2mic-colors, subtle-bg);
+  }
+}

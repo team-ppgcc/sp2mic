@@ -1,0 +1,14 @@
+@import '../../../../styles/_app-variables.scss';
+
+.app-grid {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+//.app-grid {
+//  width: 100%;
+//  grid-template-columns: 1fr 1fr 1fr 1fr;
+//}
+
+.space-height {
+  height: 0.5cm;
+}

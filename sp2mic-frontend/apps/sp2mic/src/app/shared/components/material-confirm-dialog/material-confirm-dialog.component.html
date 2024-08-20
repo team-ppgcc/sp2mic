@@ -1,0 +1,13 @@
+<h1 class="titulo" mat-dialog-title>{{titulo}}</h1>
+<hr class="modal-confirmacao" />
+<div mat-dialog-content>
+  <p>
+    {{mensagem}}
+  </p>
+</div>
+<div class="modal-confirmacao-button" mat-dialog-actions>
+  <button (click)="confirmar()" appBtn class="primary-action" icon="fa-check-circle" label="Confirm">
+  </button>
+  <button (click)="cancelar()" appBtn class="secondary-action" icon="fas fa-window-close" label="Cancel">
+  </button>
+</div>

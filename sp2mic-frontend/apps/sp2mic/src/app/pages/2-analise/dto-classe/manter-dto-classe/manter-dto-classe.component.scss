@@ -1,0 +1,38 @@
+.app-grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.space-height {
+  height: 0.5cm;
+}
+
+.icone {
+  margin-left: 10px;
+}
+
+.coluna-tipo-dado {
+  width: 60%;
+}
+
+.mat-form-field-class {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 95%;
+}
+
+.mat-form-field-name-class {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 95%;
+}
+
+.app-grid {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.app-grid-2 {
+  display: grid;
+  grid-gap: 1em;
+  width: 100%;
+  grid-template-columns: 2fr 1fr;
+}

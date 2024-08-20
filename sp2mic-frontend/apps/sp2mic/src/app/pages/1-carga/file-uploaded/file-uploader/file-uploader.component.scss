@@ -1,0 +1,167 @@
+@import '../../../../../app/styles/_app-variables.scss';
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/mixins';
+
+.file-uploader {
+  background-color: map-get($sp2mic-colors, subtle-bg);
+  border: 2px dashed map-get($sp2mic-colors, primary);
+  padding: 3rem;
+  @include media-breakpoint-down(lg) {
+    padding: 2rem;
+  }
+  @include media-breakpoint-down(sm) {
+    padding: 1rem;
+  }
+
+  .files-for-upload {
+    margin-bottom: 3rem;
+
+    .selected-file {
+      border-radius: 0;
+      font-family: 'Roboto', sans-serif;
+
+      &:not(:last-of-type) {
+        margin-bottom: 1rem;
+      }
+
+      .mat-expansion-panel-header {
+        cursor: default;
+        height: auto;
+        padding: 0;
+
+        &[aria-disabled=true] {
+          color: inherit;
+        }
+
+        .selected-file__header {
+          display: flex;
+          flex: 1 1 auto;
+          align-items: center;
+          justify-content: space-between;
+
+          .selected-file__name {
+            color: map-get($sp2mic-colors, primary-dark);
+            overflow: hidden;
+            padding: 0 1.5rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          .selected-file__actions {
+            display: flex;
+            justify-content: flex-end;
+
+            button {
+              display: flex;
+              align-items: center;
+              min-width: 0;
+              padding: 0 15px;
+            }
+          }
+        }
+
+        &.mat-expanded {
+          .selected-file__header {
+            flex: 1 1 auto;
+            border-bottom: solid 1px map-get($sp2mic-colors, divider);
+          }
+        }
+
+        .mat-content {
+          display: block;
+        }
+
+      }
+
+      .mat-expansion-panel-body {
+        padding-top: 1rem;
+
+        .selected-file__upload--error {
+          color: map-get($sp2mic-colors, notification);
+        }
+
+        .selected-file__upload--result {
+          color: map-get($sp2mic-colors, notification);
+          display: table-cell;
+          vertical-align: bottom;
+        }
+      }
+    }
+  }
+
+  .file-uploader__instructions {
+    color: map-get($sp2mic-colors, primary);
+    margin-bottom: 3rem;
+    padding: 0 1rem;
+    text-align: center;
+    @include media-breakpoint-down(lg) {
+      margin-bottom: 2rem;
+    }
+    @include media-breakpoint-down(sm) {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .file-upload__options {
+    display: flex;
+    justify-content: center;
+
+    button {
+      &.all_file__upload, &.all_file__cancel {
+        display: flex;
+        align-items: center;
+        border-left: 2px solid map-get($sp2mic-colors, subtle-bg);
+        min-width: 0;
+        padding: 0 15px;
+      }
+    }
+
+    .file-upload__native-selection {
+      display: none;
+    }
+  }
+}
+
+button {
+  background: map-get($sp2mic-colors, primary);
+  border: none;
+  box-shadow: none;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  padding: 0 20px;
+  text-transform: uppercase;
+
+  &.primary-button, &.secondary-button {
+    min-width: 150px;
+  }
+
+  &.secondary-button {
+    background: map-get($sp2mic-colors, primary-dark);
+  }
+
+  &:hover, &:focus {
+    outline: none;
+  }
+
+  &:not(.mat-focus-indicator) {
+    height: 50px;
+
+    &:hover, &:focus {
+      background: map-get($sp2mic-colors, primary-light);
+      color: map-get($sp2mic-colors, default-text);
+      outline: none;
+    }
+
+    &:disabled {
+      background: map-get($sp2mic-colors, disabled-bg);
+      color: map-get($sp2mic-colors, disabled-text);
+    }
+  }
+
+  .button-icon {
+    font-size: 2rem;
+    margin-left: 10px;
+  }
+
+}

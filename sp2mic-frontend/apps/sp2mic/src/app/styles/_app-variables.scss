@@ -1,0 +1,50 @@
+$baseFontSize: 14px;
+$phoneFontSize: 14px;
+
+$lightBlue: hsl(203, 40%, 52%); // #5490b6
+$red: hsl(7, 71%, 55%); // #dd4b39 Danger
+$green: #00a65a; //Success
+$aqua: #00c0ef; //Info
+$yellow: #f39c12; //Warning
+$blue: #0073b7;
+$navy: #001F3F;
+$teal: #39CCCC;
+$olive: #3D9970;
+$lime: #01FF70;
+$orange: #DE6F25FF; //#de6f25;
+$fuchsia: #F012BE;
+$purple: #605ca8;
+$maroon: #D81B60;
+$black: #111;
+$gray: #d2d6de;
+
+$textColor: #333;
+$lightTextColor: #555;
+
+$linkColor: #007bff;
+$addEndidade: rgba(240, 240, 240, 0.38);
+$addEndidade1: #f4f4f4;
+$bodyBg: #ecf0f5;
+$sp2mic: #303f9f; //#3f51b5;//#1976d2;//hsl(206, 83%, 27%);//hsl(280, 34%, 55%);//#61a694;
+$sp2micLight: hsl(278, 19%, 77%); //#5390b7;
+$operacoesCredito: hsl(280, 31%, 47%);
+$lineColor: #f4f4f4;
+
+$themeColor: $sp2mic; //#84539d
+$themeColorLight: $sp2micLight;
+$okColor: $green;
+$notOkColor: $red;
+
+$sp2mic-colors: (
+        primary: $sp2mic,
+        primary-light: #5264d9,
+        primary-dark: #182688,
+
+        notification: #B00020,
+        subtle-bg: #EEEEEE,
+        default-text: #000000,
+
+        disabled-text: rgb(0,0,0,0.26),
+        disabled-bg: rgb(0,0,0,0.12),
+        divider: rgb(0,0,0,0.12)
+);

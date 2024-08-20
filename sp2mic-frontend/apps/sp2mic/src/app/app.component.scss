@@ -1,0 +1,101 @@
+@import "styles/_app-variables.scss";
+@import "styles/_app-mixins.scss";
+
+mat-toolbar {
+  height: 64px;
+  position: fixed;
+  z-index: 100;
+  width: 100% !important;
+}
+
+.toolbar-sp2mic {
+  background-color: $themeColor;
+  background-image: url('../assets/img/template/trianglify-header-bg.svg');
+  background-position: center bottom;
+}
+
+.button-menu {
+  margin-left: -8px;
+}
+
+.img-logo-sp2mic {
+  width: 4cm;
+  height: 1.2cm;
+  padding: 0.6%;
+  margin-left: 10px;
+  margin-top: 9px;
+}
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  user-select: none;
+  margin-top: 65px;
+}
+.menu-divider {
+  margin-bottom: 10px;
+}
+
+h2.app-module-title {
+  font-size: px2em(13);
+  font-weight: normal;
+  color: $lightTextColor;
+
+  &::before {
+    @include font-awesome($icon-utf-code: '\f101');
+    margin-right: .36em;
+    margin-left: .36em;
+  }
+}
+
+.active {
+  background-color: rgb(245, 245, 245);
+}
+
+.sidenav-item {
+  font-size: px2em(12);
+  font-weight: normal;
+  color: $lightTextColor;
+}
+
+mat-icon {
+  color: black;
+}
+
+.menu-expanded {
+  display: flex;
+}
+
+.menu-item-title {
+  padding-left: 8px;
+}
+
+.flexExpand {
+  flex: 1 1 auto;
+}
+
+.img-logo-gesad {
+  width: 3cm;
+  height: 0.9cm;
+  //padding: 0.5%;
+  margin-left: 25px;
+  margin-top: 5px;
+}
+
+.img-logo-ppgcc {
+  width: 4.3cm;
+  height: 1.3cm;
+  //padding: 0.5%;
+  margin-left: 40px;
+  margin-top: 2px;
+}
+
+.img-logo-uece {
+  width: 3.3cm;
+  height: 1.1cm;
+  //padding: 0.4%;
+  margin-left: 40px;
+  margin-top: 1px;
+}

@@ -1,0 +1,22 @@
+package {{nomePacote}}.dto;
+
+
+{%- for imp in imports -%}
+import {{imp -}};
+{%- endfor -%}
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class {{nomeDtoClasse}} {
+
+{%- for a in atributos -%}
+    private {{a.TipoDadoNome}} {{a.NomeAtributo}};
+{%- endfor -%}
+}

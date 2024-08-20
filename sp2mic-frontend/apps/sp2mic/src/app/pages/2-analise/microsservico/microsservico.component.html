@@ -1,0 +1,117 @@
+<app-breadcrumb currentLabel="Microservices Search"></app-breadcrumb>
+
+<div class="custom-class">
+  <header class="app-page-header">
+    <h1 class="app-use-case">Microservices</h1>
+    <h2 class="app-page-title">Search</h2>
+  </header>
+
+  <section class="app-box">
+    <form #formMicrosservico="ngForm">
+      <mat-accordion [togglePosition]="'before'">
+        <mat-expansion-panel (afterExpand)="aposExpandir()" [expanded]="expandiu">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h3 class="app-filter-title">Search Filters</h3>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="app-box-body app-grid">
+            <mat-form-field>
+              <mat-label>Microservice</mat-label>
+              <input [formControl]="microserviceFormControl" [matAutocomplete]="microserviceAuto" matInput
+                     maxlength="200" type="text">
+              <mat-autocomplete #microserviceAuto="matAutocomplete" [displayWith]="microserviceDisplayFn">
+                <mat-option *ngFor="let option of microserviceFilteredOptions | async" [value]="option">
+                  {{ option.noMicrosservico }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Ready to Generate</mat-label>
+              <mat-select [(ngModel)]="microsservicoFilter.snProntoParaGerar"
+                          [disabled]="!servidorDisponivel" id="combo-snProntoParaGerar" name="snProntoParaGerar">
+                <mat-option></mat-option>
+                <mat-option [value]="true">Yes</mat-option>
+                <mat-option [value]="false">No</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <footer>
+        <button (click)="buscar()" [disabled]="!servidorDisponivel" appBtn class="primary-action"
+                icon="fa-search" id="btn-microsservicor"
+                label="Search"></button>
+        <button (click)="limpar(formMicrosservico)" [disabled]="!servidorDisponivel" appBtn class="secondary-action"
+                icon="fa-eraser"
+                id="btn-limpar" label="Clean"></button>
+        <button (click)="inserirMicrosservico()" [disabled]="!servidorDisponivel" appBtn class="primary-action"
+                icon="fa-plus" label="Insert"></button>
+        <button [routerLink]="['/home']" appBtn icon="fa-reply" label="Return"></button>
+      </footer>
+    </form>
+    <header *ngIf="pesquisou">Search results: {{ microsservicos.length }} record(s)</header>
+
+    <div [hidden]="(microsservicos.length === 0 || !pesquisou)" class="app-box-body scroll">
+
+      <table [dataSource]="dataSource"
+             [hidden]="(microsservicos.length === 0 || !pesquisou)" aria-label="Tabela de Microsservicos"
+             class="app-datatable align-center"
+             mat-table matSort matSortDisableClear>
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+
+        <ng-container matColumnDef="snProntoParaGerar">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Ready To Generate</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['edit', row.id]" id="col-3-edit_microsservico{{ i }}">
+              <span *ngIf="row.snProntoParaGerar" class="analisado">{{ rotuloBoolean(row.snProntoParaGerar) }}</span>
+              <span *ngIf="!row.snProntoParaGerar"
+                    class="nao-analisado">{{ rotuloBoolean(row.snProntoParaGerar) }}</span>
+            </a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="noMicrosservico">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['edit', row.id]" id="col-0-edit_microsservico{{ i }}">{{ row.noMicrosservico }}</a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="qtdEndpoints">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Endpoints</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['edit', row.id]" id="col-3-edit_storedProcedure{{ i }}">
+              {{ row.qtdEndpoints }}
+            </a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acao">
+          <th *matHeaderCellDef mat-header-cell></th>
+          <td *matCellDef="let row" mat-cell>
+            <button (click)="confirmDialog(row.id, row.noMicrosservico)" class="primary-action" mat-icon-button
+                    matTooltip="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+      </table>
+
+      <div [hidden]="microsservicos.length === 0 ">
+        <mat-paginator [pageSizeOptions]="opcoesTamanhoPagina" [pageSize]="tamanhoPaginaPadrao" showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </div>
+
+    <div *ngIf="microsservicos.length === 0 && pesquisou" class="app-empty-search-result" role="alert">
+      <span>No record found.</span>
+    </div>
+  </section>
+
+</div>

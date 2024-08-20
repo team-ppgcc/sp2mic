@@ -1,0 +1,144 @@
+<app-breadcrumb [currentLabel]="labelTitle">
+  <app-crumb label="Endpoint Search" order="1" route="/analysis/endpoint"></app-crumb>
+</app-breadcrumb>
+<div class="custom-class">
+  <header class="app-page-header"><h1 class="app-use-case">Stored Procedures</h1>
+    <h2 class="app-page-title">&nbsp;</h2>
+    <h1 class="app-use-case">Endpoint</h1>
+    <h2 class="app-page-title">{{ labelTitle }}&nbsp;</h2>
+    <h2 class="app-page-title"> {{ endpoint.noStoredProcedure }}</h2></header>
+  <section class="app-box">
+    <form #endpointForm="ngForm">
+
+      <header>Fill in the field(s)</header>
+      <div class="app-box-body">
+        <div class="app-grid-4-colunas fields">
+          <mat-form-field>
+            <mat-label>Endpoint Method Name</mat-label>
+            <input #noMetodoFormControl="ngModel" [(ngModel)]="endpoint.noMetodoEndpoint" [disabled]="!solicitouEdicao"
+                   autocomplete="off" class="form-control" id="noMetodoEndpoint" matInput maxlength="200"
+                   name="noMetodoFormControl" required type="text" (blur)="retirarEspacosEmBranco()">
+            <mat-error>Required field</mat-error>
+
+<!--            <mat-error-->
+<!--              *ngIf="noMetodoFormControl.invalid">  -->  <!-- pattern="[a-zA-Z0-9]+" -->
+<!--              {{ retornaMensagemDeErroCampoInvalido(noMetodoFormControl) }}-->
+<!--            </mat-error>-->
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Endpoint Path</mat-label>
+            <input #noPathFormControl="ngModel" [(ngModel)]="endpoint.noPath" [disabled]="!solicitouEdicao"
+                   autocomplete="off" class="form-control" id="noPath" matInput maxlength="200" name="noPathFormControl"
+                    required type="text" (blur)="colocarBarra()">
+            <mat-error>Required field</mat-error>
+<!--            <mat-error-->
+<!--              *ngIf="noPathFormControl.invalid">  pattern="^/\w+(?:[\-]\w+)*(?:/\w+(?:[\-]\w+)*)*$" req-->
+<!--              {{ retornaMensagemDeErroCampoInvalido(noPathFormControl) }}-->
+<!--            </mat-error>-->
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Microservice</mat-label>
+            <input [formControl]="microserviceFormControl" [matAutocomplete]="microserviceAuto" matInput maxlength="200"
+                   required name="noMicroserviceFormControl" type="text" (click)="limparValor()">
+            <mat-autocomplete #microserviceAuto="matAutocomplete" [displayWith]="microserviceDisplayFn">
+              <mat-option *ngFor="let option of microserviceFilteredOptions | async" [value]="option">
+                {{ option.noMicrosservico }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error>Required field</mat-error>
+          </mat-form-field>
+          <div>
+            <button (click)="abrirModalCriarEditarMicrosservico('Insert')"
+                    [disabled]="!solicitouEdicao" class="fas fa-plus" data-placement="top" data-toggle="tooltip"
+                    mat-icon-button matTooltip="Insert New Microservice" matTooltipClass="tooltip"
+                    name="btnIncluirMicrosservico"></button>
+<!--            <button (click)="abrirModalCriarEditarMicrosservico('Update')"-->
+<!--                    [disabled]="!solicitouEdicao || this.endpoint.idMicrosservico === undefined" class="fas fa-edit"-->
+<!--                    data-placement="top" data-toggle="tooltip" mat-icon-button matTooltip="Edit Microservice"-->
+<!--                    matTooltipClass="tooltip"-->
+<!--                    name="btnEditarMicrosservico"></button>-->
+          </div>
+        </div>
+        <div class="app-grid-4-colunas fields">
+          <mat-form-field>
+            <mat-label>A list will be returned?</mat-label>
+            <mat-select #snRetornoListaFormControl="ngModel" [(ngModel)]="endpoint.snRetornoLista"
+                        [disabled]="!solicitouEdicao || endpoint.coTipoDadoRetorno === TipoDadoEnum.VOID"
+                        class="form-control" id="snRetornoLista" name="snRetornoListaFormControl" required>
+              <mat-option [value]="true">Yes</mat-option>
+              <mat-option [value]="false">No</mat-option>
+            </mat-select>
+            <mat-error>Required field</mat-error>
+          </mat-form-field>
+<!--          <mat-form-field>-->
+<!--            <mat-label>Analyzed</mat-label>-->
+<!--            <mat-select #snAnalisadoFormControl="ngModel" [(ngModel)]="endpoint.snAnalisado"-->
+<!--                        [disabled]="!solicitouEdicao"-->
+<!--                        class="form-control" id="snAnalisado" name="snAnalisadoFormControl" required>-->
+<!--              <mat-option [value]="true">Yes</mat-option>-->
+<!--              <mat-option [value]="false">No</mat-option>-->
+<!--            </mat-select>-->
+<!--            <mat-error>Required field</mat-error>-->
+<!--          </mat-form-field>-->
+          <mat-form-field>
+            <mat-label>Data Type Returned</mat-label>
+            <mat-select #coTipoDadoRetornoFormControl="ngModel" (ngModelChange)="marcarRetornoListaComoNao()"
+                        [(ngModel)]="endpoint.coTipoDadoRetorno" [disabled]="!solicitouEdicao" class="form-control"
+                        id="coTipoDadoRetorno" name="coTipoDadoRetornoFormControl" required>
+              <mat-option></mat-option>
+              <mat-option *ngFor="let tipo of valoresComboTipoDado; index as i" [value]=tipo.id>
+                {{ tipo.nome }}
+              </mat-option>
+            </mat-select>
+            <mat-error>Required field</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="app-grid-2-colunas-mescladas">
+          <mat-form-field *ngIf="endpoint.coTipoDadoRetorno === TipoDadoEnum.DTO">
+            <mat-label>Returned DTO Class</mat-label>
+            <mat-select #returnedDtoClassFormControl="ngModel"
+                        [(ngModel)]="endpoint.idDtoClasse"
+                        [disabled]="!solicitouEdicao"
+                        class="form-control"
+                        id="idDtoClasse"
+                        name="idDtoClasseNavigationFormControl">
+              <mat-option *ngFor="let valor of valoresComboDtoClassName; index as i" [value]=valor.id>
+                {{ valor.nome }}
+              </mat-option>
+            </mat-select>
+            <mat-error>Required field</mat-error>
+          </mat-form-field>
+        </div>
+        <mat-form-field
+          *ngIf="endpoint.coTipoDadoRetorno !== TipoDadoEnum.VOID && endpoint.coTipoDadoRetorno !== TipoDadoEnum.DTO && endpoint.noVariavelRetornda != '' && endpoint.noVariavelRetornda != null && endpoint.noVariavelRetornda != undefined">
+          <mat-label>Returned Variable</mat-label>
+          <input [(ngModel)]="endpoint.noVariavelRetornda" autocomplete="off" disabled id="noVariavelRetornda"
+                 matInput maxlength="200" name="noVariavelRetorndaFormControl" type="text">
+        </mat-form-field>
+
+        <div class="app-grid-4-colunas-mescladas">
+          <mat-form-field>
+            <mat-label>Command</mat-label>
+            <textarea #txEndpointFormControl="ngModel" [(ngModel)]="endpoint.txEndpointTratado"
+                      [disabled]="!solicitouEdicao"
+                      autocomplete="off" class="app-box-view form-control" id="txEndpoint" matInput
+                      name="txEndpointFormControl" required rows="10">
+            </textarea>
+            <mat-error>Required field</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <footer>
+        <ui-switch (change)="habilitaEdicao($event)" [checked]="solicitouEdicao"></ui-switch>
+        <button (click)="abrirModalEditarEndpoint()" [disabled]="formInvalido(endpointForm)" [hidden]="!solicitouEdicao"
+                appBtn class="primary-action" icon="fa-save" label="Save" matTooltip="Save changes"></button>
+        <button (click)="abrirModalDeletarEndpoint()" *ngIf="!solicitouEdicao" appBtn icon="fa-trash"
+                label="Delete" matTooltip="Delete endpoint"></button>
+        <button (click)="retornar()" *ngIf="!solicitouEdicao"
+                [matTooltip]=retornarToolTip appBtn icon="fa-reply" label="Return"></button>
+      </footer>
+    </form>
+  </section>
+</div>

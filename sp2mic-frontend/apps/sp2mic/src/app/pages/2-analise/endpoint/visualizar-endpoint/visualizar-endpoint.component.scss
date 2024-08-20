@@ -1,0 +1,23 @@
+%base-grid-100 {
+  display: grid;
+  grid-gap: 1em;
+  width: 100%;
+}
+
+.app-box-view {
+  padding-left: 50px;
+  font-family: "JetBrains Mono", "JetBrains Mono Light", serif;
+}
+
+.app-grid-4-colunas-mescladas {
+  @extend %base-grid-100;
+  grid-template-columns: 4fr;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 300px;
+  line-height: 1.5;
+  padding: 10px;
+  font-size: 12px;
+}

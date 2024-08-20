@@ -1,0 +1,79 @@
+<app-breadcrumb currentLabel="Variables Search"></app-breadcrumb>
+
+<div class="custom-class">
+  <header class="app-page-header">
+    <h1 class="app-use-case">Variables</h1>
+    <h2 class="app-page-title">Search</h2>
+  </header>
+
+  <section class="app-box">
+    <form #formVariavel="ngForm">
+      <mat-accordion [togglePosition]="'before'">
+        <mat-expansion-panel (afterExpand)="aposExpandir()" [expanded]="expandiu">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h3 class="app-filter-title">Search Filters</h3>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="app-box-body app-grid">
+
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <footer>
+        <button (click)="buscar()" appBtn class="primary-action" icon="fa-search"
+                id="btn-pesquisar"
+                label="Search"></button>
+        <button (click)="limpar(formVariavel)" appBtn class="secondary-action" icon="fa-eraser" id="btn-limpar"
+                label="Clean"></button>
+        <button (click)="inserirVariavel()" appBtn class="primary-action" icon="fa-plus"
+                label="Insert"></button>
+        <button [routerLink]="['/home']" appBtn icon="fa-reply" label="Return"></button>
+      </footer>
+    </form>
+    <header *ngIf="pesquisou">Search results: {{ variaveis.length }} record(s)</header>
+
+    <div [hidden]="variaveis.length === 0 || !pesquisou" class="app-box-body scroll">
+      <table (matSortChange)="ordenarDados($event)" [dataSource]="dataSource"
+             [hidden]="(variaveis.length === 0 || !pesquisou)"
+             aria-label="Tabela de Operandos"
+             class="app-datatable align-center"
+             mat-table matSort matSortDisableClear>
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+
+        <ng-container matColumnDef="noVariavel">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Nome</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['edit', row.id]" id="col-0-edit_variavel{{ i }}">{{ row.noVariavel }}</a></td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="acao">
+          <th *matHeaderCellDef mat-header-cell></th>
+          <td *matCellDef="let row" mat-cell>
+            <button (click)="confirmDialog(row.id, row.noVariavel)" class="primary-action" mat-icon-button
+                    matTooltip="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+      </table>
+
+      <div [hidden]="variaveis.length === 0">
+        <mat-paginator #paginator (page)="pageEvent = $event; aoMudarPaginacao($event)" [length]="totalVariaveis"
+                       [pageSizeOptions]="opcoesTamanhoPagina"
+                       [pageSize]="tamanhoPagina" showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </div>
+
+    <div *ngIf="variaveis.length === 0 && pesquisou" class="app-empty-search-result" role="alert">
+      <span>No record found.</span>
+    </div>
+  </section>
+
+</div>

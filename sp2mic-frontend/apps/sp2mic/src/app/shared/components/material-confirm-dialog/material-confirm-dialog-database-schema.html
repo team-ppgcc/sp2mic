@@ -1,0 +1,21 @@
+<h1 mat-dialog-title class="titulo">Inform Database Schema</h1>
+<hr class="modalconfirmacao" />
+<div mat-dialog-content>
+    <section class="databaseSchema">
+        <mat-form-field>
+            <mat-label>Database Schema</mat-label>
+            <input id="databaseSchema" matInput autocomplete="off" type="text" name="databaseSchema" maxlength="200"
+                 [(ngModel)]="databaseSchema" required (blur)="retirarEspacosEmBrancoNoSchema()">
+          <mat-error>Required field</mat-error>
+        </mat-form-field>
+    </section>
+</div>
+<div mat-dialog-actions>
+    <div>
+        <button appBtn class="primary-action" icon="fa-check-circle" label="Confirmar" (click)="confirmar()"
+            [disabled]="databaseSchema?.trim().length == 0">
+        </button>
+        <button appBtn class="secondary-action" icon="fas fa-window-close" label="Cancelar" (click)="cancelar()">
+        </button>
+    </div>
+</div>

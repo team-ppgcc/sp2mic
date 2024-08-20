@@ -1,0 +1,46 @@
+package {{nomePacote}}.controller;
+
+import org.springframework.web.bind.annotation.RestController;
+{%- for imp in imports -%}
+import {{imp -}};
+{%- endfor -%}
+
+
+@RestController
+public class OrchestratorController {
+
+{%- for mic in microsservicos -%}
+    private {{mic.NomeComInicialMaiuscula}}RestClientService {{mic.NomeComInicialMinuscula}}RestClientService;
+{%- endfor -%}
+
+    public OrchestratorController({{parametrosConstrutorOrquestrador}}) {
+{%- for mic in microsservicos -%}
+        this.{{mic.NomeComInicialMinuscula}}RestClientService = {{mic.NomeComInicialMinuscula}}RestClientService;
+{%- endfor -%}
+    }
+
+{%- for sp in storedProcedures -%}
+    {{sp.TxResultadoParser}}
+    @GetMapping("/{{sp.NomeStoredProcedure}}{{sp.ParametrosPath}}")
+    public {{sp.RetornoMetodo}} {{sp.NomeStoredProcedure}}({{sp.ParametrosController}}) {
+    {%- if sp.PossuiRetorno -%}
+        {{sp.RetornoMetodo}} retorno = null;
+    {%- endif -%}
+    {{sp.ConteudoComandos}}
+    {%- if sp.PossuiRetorno -%}
+        return retorno;
+    {%- endif -%}
+    }
+
+    {%- for ep in sp.EndpointsDosMicrosservicosProntosParaGerar -%}
+    private {{ep.RetornoMetodo}} {{ep.NomeMetodo}}{{ep.NomeMicrosservico}}({{ep.TipoNomeParametros}}) {
+    {%- if ep.PossuiRetorno -%}
+        return {{ep.NomeMicrosservicoInicialMinuscula}}RestClientService.{{ep.NomeMetodo}}({{ep.ParametrosChamada}});
+    {%- else -%}
+        {{ep.NomeMicrosservicoInicialMinuscula}}RestClientService.{{ep.NomeMetodo}}({{ep.ParametrosChamada}});
+    {%- endif -%}
+    }
+   {%- endfor -%}
+
+{%- endfor -%}
+}

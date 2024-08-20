@@ -1,0 +1,144 @@
+<app-breadcrumb currentLabel="Stored Procedures Loading and Processing - Database Connection"></app-breadcrumb>
+
+<div class="custom-class">
+  <header class="app-page-header">
+    <h1 class="app-use-case">Stored Procedures Loading and Processing - Database Connection</h1>
+    <h2 class="app-page-title">Database Connection</h2>
+  </header>
+
+  <section class="app-box">
+    <form #formConexao="ngForm">
+      <mat-accordion [togglePosition]="'before'">
+        <mat-expansion-panel (afterExpand)="aposExpandirConexao()" [expanded]="expandiuConexao">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h3 class="app-filter-title">Fill in the fields</h3>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="app-box-body app-grid">
+
+            <mat-form-field>
+              <mat-label>Host</mat-label>
+              <input [(ngModel)]="cargaDtoConexao.dadosConexao.host" autocomplete="off" id="host" matInput
+                     name="host" required type="text">
+              <mat-error>Required field</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Port</mat-label>
+              <input [(ngModel)]="cargaDtoConexao.dadosConexao.port" autocomplete="off" id="port" mask="99999"
+                     matInput name="port" required type="text">
+              <mat-error>Required field</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>User Name</mat-label>
+              <input [(ngModel)]="cargaDtoConexao.dadosConexao.userName" autocomplete="off" id="user-name" matInput
+                     name="username" required type="text">
+              <mat-error>Required field</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Password</mat-label>
+              <input [(ngModel)]="cargaDtoConexao.dadosConexao.password" autocomplete="off" id="password" matInput
+                     name="password" required type="password">
+              <mat-error>Required field</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Database Schema</mat-label>
+              <input [(ngModel)]="cargaDtoConexao.schema" autocomplete="off" id="schemaConexao" matInput
+                     name="schemaConexao" required type="text">
+              <mat-error>Required field</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Database Name</mat-label>
+              <input [(ngModel)]="cargaDtoConexao.dadosConexao.databaseName" autocomplete="off" id="database-name"
+                     matInput name="databaseName" required type="text">
+              <mat-error>Required field</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="app-grid-2-colunas">
+            <mat-form-field>
+              <mat-label>Stored Procedure</mat-label>
+              <input [(ngModel)]="cargaDtoConexao.nomeProcedure" autocomplete="off" id="storedProcedureNameConexao"
+                     matInput
+                     name="storedProcedureNameConexao" type="text">
+              <mat-error>Required field</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Loaded</mat-label>
+              <mat-select [(ngModel)]="cargaDtoConexao.snCarregada" id="combo-snLoaded" name="snLoaded">
+                <mat-option></mat-option>
+                <mat-option [value]="true">Yes</mat-option>
+                <mat-option [value]="false">No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <footer>
+        <button (click)="pesquisarConexao()" [disabled]="formConexao.invalid" appBtn class="primary-action"
+                icon="fa-search" id="btn-pesquisar-conexao" label="Search"></button>
+
+        <button (click)="carregarProceduresConexao()" *ngIf="pesquisouConexao" appBtn class="primary-action"
+                icon="fa-building" id="btn-carregar-conexao" label="Process"></button>
+
+        <button (click)="limparFormularioConexao(formConexao)" appBtn class="secondary-action" icon="fa-eraser"
+                id="btn-conexao-limpar" label="Clean"></button>
+
+        <button [routerLink]="['/load']" appBtn class="secondary-action" icon="fa-reply" id="btn-conexao-return"
+                label="Return"></button>
+      </footer>
+    </form>
+    <header *ngIf="pesquisouConexao">Search results: {{ resultadoDataSourceConexao.length }} record(s)</header>
+
+    <div [hidden]="resultadoDataSourceConexao.length === 0 || !pesquisouConexao" class="app-box-body scroll">
+      <table [dataSource]="dataSourceConexao"
+             [hidden]="resultadoDataSourceConexao.length === 0 || !pesquisouConexao"
+             aria-label="Tabela de Stored Procedures"
+             class="app-datatable align-center"
+             mat-table matSort matSortDisableClear>
+
+        <tr *matHeaderRowDef="displayedColumnsConexao" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumnsConexao;" mat-row></tr>
+
+        <ng-container matColumnDef="checado">
+          <th *matHeaderCellDef id="colunaSelecionarTodos" mat-header-cell>
+            <mat-checkbox (click)="selecionarTodasProceduresConexao()" [(ngModel)]="selecionarTodosConexao"
+                          color="primary"
+                          name="selecionarTodos"></mat-checkbox>
+          </th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <mat-checkbox [(ngModel)]="row.checado" color="primary" name="selecionar_{{ i }}">
+            </mat-checkbox>
+          </td>
+
+        </ng-container>
+        <ng-container matColumnDef="snCarregada">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Loaded</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <span *ngIf="row.snCarregada" class="analisado">{{ rotuloBoolean(row.snCarregada) }}</span>
+            <span *ngIf="!row.snCarregada" class="nao-analisado">{{ rotuloBoolean(row.snCarregada) }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="nome">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>&nbsp;&nbsp;Stored Procedures</th>
+          <td *matCellDef="let row" mat-cell>{{ row.nome }}</td>
+        </ng-container>
+      </table>
+      <div [hidden]="resultadoDataSourceConexao.length === 0">
+        <mat-paginator #paginatorConexao [pageSizeOptions]="opcoesTamanhoPagina" [pageSize]="tamanhoPaginaPadrao"
+                       showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+    <div *ngIf="resultadoDataSourceConexao.length === 0 && pesquisouConexao" class="app-empty-search-result"
+         role="alert">
+      <span>No record found.</span>
+    </div>
+  </section>
+</div>

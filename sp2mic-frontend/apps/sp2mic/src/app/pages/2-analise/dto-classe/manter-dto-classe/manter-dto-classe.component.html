@@ -1,0 +1,144 @@
+<app-breadcrumb *ngIf="!data.modal" [currentLabel]="labelTitle">
+  <app-crumb label="DTO Class Search" order="1" route="/analysis/dto-classe"></app-crumb>
+</app-breadcrumb>
+<div class="custom-class">
+  <header class="app-page-header"><h1 class="app-use-case">DTO Class</h1>
+    <h2 *ngIf="!data.modal" class="app-page-title">{{ labelTitle }}</h2>
+    <h2 *ngIf="data.modal" class="app-page-title">{{ nomeOperacaoJanela }}</h2></header>
+  <section class="app-box">
+    <form>
+      <header>Fill in the fields</header>
+      <div *ngIf="data.modal" class="space-height"></div>
+      <div class="app-box-body app-grid-2">
+        <mat-form-field>
+          <mat-label>DTO Classe</mat-label>
+          <input #noDtoClasseFormControl="ngModel" [(ngModel)]="dtoClasse.noDtoClasse"
+                 [disabled]="(!isInclusao && !solicitouEdicao)"
+                 autocomplete="off" id="noClasse" matInput (blur)="retirarEspacosEmBranco()"
+                 maxlength="200" name="noClasse" required type="text">
+          <mat-error
+            *ngIf="noDtoClasseFormControl.invalid">{{
+              retornaMensagemDeErroCampoInvalido(noDtoClasseFormControl)
+            }}
+          </mat-error>
+        </mat-form-field>
+<!--        <mat-form-field>-->
+<!--          <mat-label>Microservice</mat-label>-->
+<!--          <mat-select [(ngModel)]="dtoClasse.idMicrosservico" [disabled]="(!isInclusao && !solicitouEdicao)"-->
+<!--                      id="combo-microsservico" name="idMicrosservico">-->
+<!--            <mat-option *ngFor="let valor of valoresComboMicrosservico; index as i"-->
+<!--                        [value]=valor.id> {{ valor.noMicrosservico }}-->
+<!--            </mat-option>-->
+<!--          </mat-select>-->
+<!--        </mat-form-field>-->
+      </div>
+      <div class="app-box-body app-grid">
+        <mat-form-field>
+          <mat-label>Stored Procedure</mat-label>
+          <input #noStoredProcedureFormControl="ngModel" [(ngModel)]="dtoClasse.noStoredProcedure" disabled
+                 id="noStoredProcedure" matInput name="noStoredProcedure" type="text">
+        </mat-form-field>
+      </div>
+
+      <footer>
+        <ui-switch (change)="habilitaEdicao($event)" *ngIf="!isInclusao" [checked]="solicitouEdicao"></ui-switch>
+        <button (click)="abrirModalIncluirOuAlterarClasse()" [disabled]="noDtoClasseFormControl.invalid"
+                [hidden]="(!isInclusao && !solicitouEdicao)" [label]="labelSaveAction" appBtn class="primary-action"
+                icon="fa-save"></button>
+        <button (click)="abrirModalDeletarClasse()" *ngIf="!isInclusao && !solicitouEdicao" appBtn
+                icon="fa-trash"
+                label="Delete"></button>
+        <button *ngIf="!data.modal && !solicitouEdicao" [routerLink]="['/analysis/dto-classe']" appBtn icon="fa-reply"
+                label="Return"></button>
+        <button (click)="close()" *ngIf="data.modal" appBtn icon="fas fa-window-close" label="Close"></button>
+      </footer>
+    </form>
+    <header>Attributes list: {{atributos?.length}} record(s)</header>
+    <div [hidden]="semAtributos" class="app-box-body scroll">
+      <table [dataSource]="dataSource" [hidden]="semAtributos"
+             aria-label="Tabela de atributos de uma classe DTO"
+             class="app-datatable align-center"
+             mat-table matSort matSortDisableClear>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+
+        <ng-container class="coluna-tipo-dado" matColumnDef="noTipoDado">
+          <th *matHeaderCellDef id="colunaCoTipoDado" mat-header-cell mat-sort-header>Data Type</th>
+
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <ng-container *ngIf="!clicouEditar[paginator.pageSize * paginator.pageIndex + i]">
+              {{ row.noTipoDado }}
+            </ng-container>
+            <ng-container *ngIf="clicouEditar[paginator.pageSize * paginator.pageIndex + i]">
+              <mat-form-field class="mat-form-field-class">
+                <mat-label>Data Type</mat-label>
+                <mat-select [(ngModel)]="atributos[paginator.pageSize * paginator.pageIndex + i].coTipoDado"
+                            id="combo-tipoDado" name="combo-tipoDado"
+                            required>
+                  <mat-option></mat-option>
+                  <mat-option *ngFor="let tipo of valoresComboTipoDado; index as i" [value]=tipo.id>
+                    {{ tipo.nome }}
+                  </mat-option>
+                </mat-select>
+                <mat-error>Required field</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="noAtributo">
+          <th *matHeaderCellDef id="colunaNoAtributo" mat-header-cell mat-sort-header>Attribute Name</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <ng-container *ngIf="!clicouEditar[paginator.pageSize * paginator.pageIndex + i]">
+              {{ row.noAtributo }}
+            </ng-container>
+            <ng-container *ngIf="clicouEditar[paginator.pageSize * paginator.pageIndex + i]">
+              <mat-form-field class="mat-form-field-name-class">
+                <mat-label>Name</mat-label>
+                <input [(ngModel)]="atributos[paginator.pageSize * paginator.pageIndex + i].noAtributo"
+                       autocomplete="off" id="inputNoAtributo"
+                       matInput maxlength="200"
+                       name="noAtributo" required type="text">
+                <mat-error>Required field</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th *matHeaderCellDef id="colunaAcoes" mat-header-cell></th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a (click)="editarAtributo(paginator.pageSize * paginator.pageIndex + i)"
+               *ngIf="!clicouEditar[paginator.pageSize * paginator.pageIndex + i]"
+               class="icone">
+              <em class="fa-solid fa-pen-to-square" matTooltip="Edit Attribute" matTooltipClass="tooltip"></em>
+            </a>
+            <a
+              (click)="excluirAtributo(paginator.pageSize * paginator.pageIndex + i)"
+              *ngIf="!clicouEditar[paginator.pageSize * paginator.pageIndex + i]" class="icone">
+              <em class="fa-solid fa-trash-can" matTooltip="Delete Attribute" matTooltipClass="tooltip"></em>
+            </a>
+            <a (click)="salvarAtributo(paginator.pageSize * paginator.pageIndex + i)"
+               *ngIf="clicouEditar[paginator.pageSize * paginator.pageIndex + i]">
+              <em class="fa-solid fa-floppy-disk" matTooltip="Save Attribute" matTooltipClass="tooltip"></em>
+            </a>
+            <a (click)="desfazer(paginator.pageSize * paginator.pageIndex + i)"
+               *ngIf="clicouEditar[paginator.pageSize * paginator.pageIndex + i]" class="icone">
+              <em class="fa-solid fa-rotate-left" matTooltip="Undo Edit" matTooltipClass="tooltip"></em>
+            </a>
+          </td>
+        </ng-container>
+
+      </table>
+
+      <div [hidden]="semAtributos">
+        <mat-paginator [pageSizeOptions]="[4, 6, 10, 20]" [pageSize]="4" showFirstLastButtons></mat-paginator>
+      </div>
+
+      <div *ngIf="semAtributos && buscouAtributos" class="app-empty-search-result" role="alert">
+        <span>No Attribute registered for the DTO class.</span>
+      </div>
+    </div>
+  </section>
+</div>

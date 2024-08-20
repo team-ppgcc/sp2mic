@@ -1,0 +1,29 @@
+<app-breadcrumb currentLabel="File Upload">
+  <app-crumb label="Upload Arquivo" order="1" route="/file-uploaded"></app-crumb>
+</app-breadcrumb>
+
+<div class="custom-class">
+  <header class="app-page-header">
+    <h1 class="app-use-case">Stored Procedures Loading and Processing</h1>
+    <h2 class="app-page-title">File Upload</h2>
+  </header>
+
+  <section class="app-box">
+    <mat-accordion [togglePosition]="'before'">
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title><h3 class="app-filter-title">Select the file(s)</h3></mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="app-box-body app-grid">
+          <div class="row g-0 justify-content-around mt-5">
+            <app-file-uploader [config]="file_upload_config"></app-file-uploader>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <footer>
+      <button [routerLink]="['/file-uploaded']" appBtn class="secondary-action" icon="fa-reply" id="btn-conexao-return"
+              label="Return"></button>
+    </footer>
+  </section>
+</div>

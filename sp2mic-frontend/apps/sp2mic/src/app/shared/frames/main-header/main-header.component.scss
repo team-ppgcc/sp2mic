@@ -1,0 +1,161 @@
+@import '../../../styles/_app-mixins.scss';
+@import '../../../styles/_custom-angular-material.scss';
+
+//mat-toolbar {
+//  position: fixed;
+//  //z-index: 100;
+//  z-index: 998;
+//  width: 100%  !important;
+//  padding: px2em(4);
+//  margin-bottom: 50px;
+//}
+
+.toolbar-sp2mic {
+  background-color: $themeColor;
+  background-image: url('../../../../assets/img/template/trianglify-header-bg.svg');
+  background-position: center bottom;
+  display: grid;
+}
+
+.space-height {
+  height: 1.7cm;
+}
+
+.img-logo-sp2mic {
+  width: 4cm;
+  height: 1.2cm;
+  padding: 0.5%;
+  margin-left: 15px;
+  margin-top: 1px;
+}
+
+header {
+  display: grid;
+  grid-gap: px2em(2);
+  position: relative;
+  border: px2em(1) solid rgba(0, 0, 0, 0.2);
+  background-color: $themeColor;
+  background-image: url('../../../../assets/img/template/trianglify-header-bg.svg');
+  background-position: center bottom;
+  color: white;
+
+  @include device('phone') {
+    grid-template-columns: 1fr;
+    grid-template-areas: "main-menu"
+      "shortcuts"
+      "accessibility"
+      "logo"
+      "credentials"
+      "top-menu";
+  }
+
+  @include device('tablet') {
+    grid-template-columns: px2em(350) 1fr;
+    grid-template-rows: minmax(px2em(30), auto) minmax(px2em(60), auto) minmax(px2em(30), auto);
+    grid-template-areas: "shortcuts accessibility"
+      "logo credentials"
+      "top-menu top-menu";
+  }
+
+  @include device('desktop') {
+    grid-template-columns: px2em(350) 1fr px2em(300);
+    grid-template-rows: minmax(px2em(30), auto) minmax(px2em(60), auto) minmax(px2em(30), auto);
+    grid-template-areas: "logo shortcuts accessibility"
+      "logo credentials credentials"
+      "top-menu top-menu top-menu";
+  }
+}
+
+.logo-container {
+  grid-area: logo;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: left;
+  padding-left: px2em(12);
+  margin-top: 12px;
+}
+
+.key {
+  background: rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  padding: 0.2em .5em;
+  border-radius: 4px;
+  position: relative;
+  color: white;
+  font-size: 10px;
+  line-height: 1;
+  margin-left: .25em;
+}
+
+.shortcuts-bar > ol,
+.accessibility-bar > ul {
+  @include inline-flex-list();
+  margin: 0;
+  padding: 0;
+
+}
+
+li {
+  font-size: px2em(12);
+  position: relative;
+  /* box-shadow: 0 0 0 px2em(1) rgba(0,0,0,0.1),
+              0 0 px2em(11) px2em(5) rgba(0,0,0,0.1) inset; */
+  padding: .5em .5em;
+  border-radius: px2em(4, 14);
+}
+
+li > a {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+
+.shortcuts-bar > ol > li {
+  margin-left: px2em(24, 14);
+
+  &:first-child {
+    margin-left: px2em(12, 14);
+  }
+}
+
+.accessibility-bar > ul > li {
+  margin-left: px2em(1);
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+app-main-menu {
+  @include device('phone', 'only') {
+    grid-area: main-menu;
+  }
+}
+
+.logo-container,
+app-main-menu {
+  margin: 0;
+}
+
+/* .shortcuts-bar,
+.accessibility-bar,
+.logo-container,
+.credentials-container,
+.top-menu-bar,
+app-main-menu {
+  //@include prototype();
+} */
+
+/** OVERLAY */
+
+p {
+  font-family: Lato, sans-serif;
+}
+
+div.hr {
+  height: 10px;
+}
+
+.nome {
+  margin-top: 12px;
+}

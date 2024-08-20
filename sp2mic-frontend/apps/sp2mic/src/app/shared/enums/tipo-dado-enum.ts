@@ -1,0 +1,15 @@
+export enum TipoDadoEnum {
+  //TIPO_NAO_MAPEADO = 1,
+  VOID = 2,
+  DTO = 3,
+  STRING = 4,
+  INTEGER = 5,
+  LONG = 6,
+  DOUBLE = 7,
+  FLOAT = 8,
+  BOOLEAN = 9,
+  LOCAL_DATE = 10,
+  LOCAL_DATE_TIME = 11,
+  BIG_DECIMAL = 12,
+  OBJECT = 13,
+}

@@ -1,0 +1,124 @@
+<app-breadcrumb *ngIf="!data.modal" [currentLabel]="labelTitle">
+  <app-crumb label="Microservice Search" order="1" route="/analysis/microsservico"></app-crumb>
+</app-breadcrumb>
+<div [class]="customClass">
+  <header class="app-page-header">
+    <h1 class="app-use-case">Microservice</h1>
+    <h2 *ngIf="!data.modal" class="app-page-title">{{ labelTitle }}</h2>
+    <h2 *ngIf="data.modal" class="app-page-title">{{ nomeOperacaoJanela }}</h2>
+  </header>
+
+  <section [class]="appBox">
+    <form #microsservicoForm="ngForm">
+      <header>Fill in the fields</header>
+      <div *ngIf="data.modal" class="space-height"></div>
+      <div class="app-box-body">
+        <div class="app-box-body app-grid">
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input #noMicrosservicoFormControl="ngModel" [(ngModel)]="microsservico.noMicrosservico"
+                   [disabled]="!solicitouEdicao" autocomplete="off" (blur)="retirarEspacosEmBranco()"
+                   class="form-control" id="noMicrosservicoFormControl" matInput maxlength="200"
+                   name="noMicrosservico" pattern="[a-zA-Z0-9]+" required type="text">
+            <mat-error
+              *ngIf="noMicrosservicoFormControl.invalid">{{
+                retornaMensagemDeErroCampoInvalido(noMicrosservicoFormControl)
+              }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field *ngIf="!data.modal">
+            <mat-label>Ready to Generate</mat-label>
+            <mat-select [(ngModel)]="microsservico.snProntoParaGerar" [disabled]="!solicitouEdicao"
+                        class="form-control" id="combo-snProntoParaGerar" name="snProntoParaGerar">
+              <mat-option [value]="true">Yes</mat-option>
+              <mat-option [value]="false">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <footer *ngIf="!data.modal">
+        <ui-switch (change)="habilitaEdicao($event)" *ngIf="!isInclusao" [checked]="solicitouEdicao"></ui-switch>
+        <button (click)="abrirModalIncluirOuEditarMicrosservico()"
+                [disabled]="microsservicoForm.invalid"
+                [hidden]="(!isInclusao && !solicitouEdicao)"
+                [label]="labelSaveAction"
+                appBtn class="primary-action"
+                icon="fa-save">
+        </button>
+        <button (click)="abrirModalDeletarMicrosservico()" *ngIf="!isInclusao && !solicitouEdicao"
+                appBtn icon="fa-trash" label="Delete">
+        </button>
+        <button *ngIf="!data.modal" [routerLink]="['/analysis/microsservico']" appBtn icon="fa-reply"
+                label="Return">
+        </button>
+      </footer>
+    </form>
+
+    <div [hidden]="isInsertOrUpdateWithoutEndpoints()">
+      <header>Endpoint list: {{microsservico.endpoints?.length}} record(s)</header>
+      <div [hidden]="microsservico.endpoints?.length === 0" class="app-box-body scroll">
+        <table [dataSource]="dataSourceEndpointListagem"
+               [hidden]="microsservico.endpoints?.length === 0" aria-label="Endpoints Table"
+               class="app-datatable align-center" mat-table matSort matSortDisableClear>
+          <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+          <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+          <ng-container class="colunaAnlisado" matColumnDef="snAnalisado">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Analyzed</th>
+            <td *matCellDef="let row; let i = index" mat-cell>
+              <a [routerLink]="['../../../endpoint/edit', row.id, 'sp']"
+                 id="col-0-edit_endpoint{{ i }}">
+                <span *ngIf="row.snAnalisado" class="analisado">{{ rotuloBoolean(row.snAnalisado) }}</span>
+                <span *ngIf="!row.snAnalisado" class="nao-analisado">{{ rotuloBoolean(row.snAnalisado) }}</span>
+              </a>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="noTipoDadoRetorno">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Returned Type</th>
+            <td *matCellDef="let row; let i = index" mat-cell>
+              <a [routerLink]="['../../../endpoint/edit', row.id, 'ms']"
+                 id="col-1-edit_endpoint{{ i }}"> {{ row.noTipoDadoRetorno }}</a>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="noMetodoEndpoint">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Method Name</th>
+            <td *matCellDef="let row; let i = index" mat-cell>
+              <a *ngIf="row.noMetodoEndpoint !== 'nomeAindaNaoDefinido'"
+                 [routerLink]="['../../../endpoint/edit', row.id, 'ms']"
+                 id="col-2-edit_endpoint{{ i }}">{{ row.noMetodoEndpoint }}</a>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="noPath">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Path</th>
+            <td *matCellDef="let row; let i = index" mat-cell>
+              <a *ngIf="row.noPath !== '/path-ainda-nao-definido'"
+                 [routerLink]="['../../../endpoint/edit', row.id, 'ms']"
+                 id="col-3-edit_endpoint{{ i }}">{{ row.noPath }}</a></td>
+          </ng-container>
+
+          <ng-container matColumnDef="noStoredProcedure">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Stored Procedure</th>
+            <td *matCellDef="let row; let i = index" mat-cell>
+              <a *ngIf="row.noPath !== '/path-ainda-nao-definido'"
+                 [routerLink]="['../../../endpoint/edit', row.id, 'ms']"
+                 id="col-4-edit_endpoint{{ i }}">{{ row.noStoredProcedure }}</a></td>
+          </ng-container>
+        </table>
+        <div [hidden]="microsservico.endpoints?.length === 0">
+          <mat-paginator [pageSizeOptions]="opcoesTamanhoPagina" [pageSize]="tamanhoPaginaPadrao"
+                         showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+      <div *ngIf="microsservico.endpoints?.length === 0 && !data.modal" class="app-empty-search-result" role="alert">
+        <span>No record found.</span>
+      </div>
+    </div>
+    <footer *ngIf="data.modal">
+      <button (click)="abrirModalIncluirOuEditarMicrosservico()" [disabled]="microsservicoForm.invalid"
+              [hidden]="(!isInclusao && !solicitouEdicao)" [label]="labelSaveAction" appBtn class="primary-action"
+              icon="fa-save">
+      </button>
+      <button (click)="close()" appBtn icon="fas fa-window-close" label="Close">
+      </button>
+    </footer>
+  </section>
+</div>

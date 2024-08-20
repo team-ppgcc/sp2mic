@@ -1,0 +1,93 @@
+@import 'app-variables';
+@import 'app-mixins';
+@import 'apps/sp2mic/src/assets/fonts/segoe/segoe-ui.scss';
+
+html,
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: $baseFontSize;
+  height: 100%;
+  min-height: 80vh;
+  min-width: 360px;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #F5F5F5;
+}
+
+
+a {
+  color: $linkColor;
+  text-decoration: none;
+
+  @include hover-active-focus {
+    color: darken($linkColor, 15%);
+    text-decoration: none;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+
+
+/* h3, h4, h5, h6 {
+  font-size: px2em(14);
+}
+ */
+var {
+  font-style: normal;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.normal {
+  font-weight: normal;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.align-center {
+  text-align: center !important;
+}
+
+.align-left {
+  text-align: left !important;
+}
+
+.align-right {
+  text-align: right !important;
+}
+
+.justify {
+  text-align: justify !important;
+}
+
+.screen-reader,
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.full-width {
+  width: 100%;
+}

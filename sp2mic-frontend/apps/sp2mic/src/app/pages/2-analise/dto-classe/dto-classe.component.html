@@ -1,0 +1,121 @@
+<app-breadcrumb currentLabel="DTO Class Search "></app-breadcrumb>
+
+<div class="custom-class">
+  <header class="app-page-header">
+    <h1 class="app-use-case">DTO Class</h1>
+    <h2 class="app-page-title">Search</h2>
+  </header>
+  <section class="app-box">
+    <form #formDtoClasse="ngForm">
+
+      <mat-accordion [togglePosition]="'before'">
+        <mat-expansion-panel (afterExpand)="aposExpandir()" [expanded]="expandiu">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h3 class="app-filter-title">Search Filters</h3>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="app-box-body app-grid">
+            <mat-form-field>
+              <mat-label>DTO Classe</mat-label>
+              <input [formControl]="dtoClasseFormControl" [matAutocomplete]="dtoClasseAuto" matInput maxlength="200"
+                     type="text">
+              <mat-autocomplete #dtoClasseAuto="matAutocomplete" [displayWith]="dtoClasseDisplayFn">
+                <mat-option *ngFor="let option of dtoClasseFilteredOptions | async" [value]="option">
+                  {{ option.noDtoClasse }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+<!--            <mat-form-field>-->
+<!--              <mat-label>Microservice</mat-label>-->
+<!--              <input [formControl]="microserviceFormControl" [matAutocomplete]="microserviceAuto" matInput-->
+<!--                     maxlength="200" type="text">-->
+<!--              <mat-autocomplete #microserviceAuto="matAutocomplete" [displayWith]="microserviceDisplayFn">-->
+<!--                <mat-option *ngFor="let option of microserviceFilteredOptions | async" [value]="option">-->
+<!--                  {{ option.noMicrosservico }}-->
+<!--                </mat-option>-->
+<!--              </mat-autocomplete>-->
+<!--            </mat-form-field>-->
+
+            <mat-form-field>
+              <mat-label>Stored Procedure</mat-label>
+              <input [formControl]="storedProcedureFormControl" [matAutocomplete]="storedProcedureAuto" matInput
+                     maxlength="200" type="text">
+              <mat-autocomplete #storedProcedureAuto="matAutocomplete" [displayWith]="storedProcedureDisplayFn">
+                <mat-option *ngFor="let option of storedProcedureFilteredOptions | async" [value]="option">
+                  {{ option.noStoredProcedure }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <footer>
+        <button (click)="buscar()" [disabled]="!servidorDisponivel" appBtn class="primary-action" icon="fa-search"
+                id="btn-pesquisar" label="Search"></button>
+        <button (click)="limpar(formDtoClasse)" [disabled]="!servidorDisponivel" appBtn class="secondary-action"
+                icon="fa-eraser"
+                id="btn-limpar" label="Clean"></button>
+        <button [routerLink]="['/home']" appBtn icon="fa-reply" label="Return"></button>
+      </footer>
+    </form>
+    <header *ngIf="pesquisou">Search results: {{ dtoClasses.length }} record(s)</header>
+
+    <div [hidden]="(dtoClasses.length === 0 || !pesquisou)" class="app-box-body scroll">
+
+      <table [dataSource]="dataSource"
+             [hidden]="(dtoClasses.length === 0 || !pesquisou)" aria-label="Tabela de Classes"
+             class="app-datatable"
+             mat-table matSort matSortDisableClear>
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+
+<!--        <ng-container matColumnDef="noMicrosservico">-->
+<!--          <th *matHeaderCellDef mat-header-cell mat-sort-header>Microservice</th>-->
+<!--          <td *matCellDef="let row; let i = index" mat-cell>-->
+<!--            <a [routerLink]="['edit', row.id]" id="col-0-edit_classe_dto{{ i }}">{{ row.noMicrosservico }}</a></td>-->
+<!--        </ng-container>-->
+
+        <ng-container matColumnDef="noDtoClasse">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['edit', row.id]" id="col-1-edit_classe_dto{{ i }}">{{ row.noDtoClasse }}</a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="noStoredProcedure">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Stored Procedure</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['edit', row.id]" id="col-1-edit_storedProcedure{{ i }}"> {{ row.noStoredProcedure }}</a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acao">
+          <th *matHeaderCellDef mat-header-cell></th>
+          <td *matCellDef="let row" mat-cell>
+            <button (click)="abrirModalVisualizarDtoClasse(row)" class="primary-action" mat-icon-button
+                    matTooltip="View DtoClass source code">
+              <mat-icon fontIcon="fa-file-code" fontSet="fa"></mat-icon>
+            </button>
+            <button (click)="confirmDialog(row.id, row.noDtoClasse)" class="primary-action" mat-icon-button
+                    matTooltip="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+      </table>
+      <div [hidden]="dtoClasses.length === 0">
+        <mat-paginator [pageSizeOptions]="opcoesTamanhoPagina" [pageSize]="tamanhoPaginaPadrao" showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </div>
+
+    <div *ngIf="dtoClasses.length === 0 && pesquisou" class="app-empty-search-result" role="alert">
+      <span>No record found.</span>
+    </div>
+  </section>
+
+</div>

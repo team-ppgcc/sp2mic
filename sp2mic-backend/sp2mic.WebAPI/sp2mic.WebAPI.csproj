@@ -1,0 +1,155 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+<!--    <PackageReference Include="AutoMapper" Version="12.0.1" />-->
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Ben.Demystifier" Version="0.4.1" />
+    <PackageReference Include="DotLiquid" Version="2.2.692" />
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
+<!--    <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.9" />-->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.SqlServer.SqlManagementObjects" Version="170.18.0" />
+    <PackageReference Include="Microsoft.SqlServer.TransactSql.ScriptDom" Version="161.8905.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+    <PackageReference Include="Scrutor" Version="4.2.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- BD -->
+
+    <!-- CrossCutting -->
+    <Folder Include="CrossCutting\Filter" />
+    <Folder Include="CrossCutting\Notifications" />
+
+    <!-- Domain -->
+    <Folder Include="Domain" />
+
+    <!-- Carga -->
+    <Folder Include="Modulo1.Carga\Controllers" />
+
+    <!-- Analise -->
+
+    <!-- Geracao -->
+    <Folder Include="Modulo3.Geracao\Controllers" />
+    <Folder Include="Resources\generated-microservices\" />
+    <Folder Include="Resources\generated-microservices-files\" />
+  </ItemGroup>
+
+   <!--ItemGroup>
+    <Reference Include="Stack.Framework">
+      <HintPath>..\..\..\..\STACK.Framework\Stack.Framework\Stack.Framework\bin\Debug\Stack.Framework.dll</HintPath>
+    </Reference>
+  </ItemGroup-->
+
+<!--  <ItemGroup>-->
+<!--    <Reference Include="Stack.Framework">-->
+<!--      <HintPath>..\..\..\..\STACK.Framework\Stack.Framework\Stack.Framework\bin\Debug\Stack.Framework.dll</HintPath>-->
+<!--    </Reference>-->
+<!--  </ItemGroup>-->
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="CrossCutting\Extensions\ExceptionMiddleware.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Modulo3.Geracao\Templates\gateway\Application.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\gateway\application.properties.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\gateway\application.yml.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\gateway\GatewayControllerTest.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\gateway\pom.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\microservices\Application.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\microservices\application.properties.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\microservices\application.yml.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\microservices\ApplicationTests.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\microservices\Controller.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\microservices\Dto.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\microservices\IndexController.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\microservices\logback-spring.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\microservices\pom.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\microservices\Repository.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\microservices\ResourceExceptionHandler.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\orquestrador\Application.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\orquestrador\application.properties.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\orquestrador\application.yml.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\orquestrador\ApplicationTests.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\orquestrador\Controller.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\orquestrador\Dto.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\orquestrador\IndexController.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\orquestrador\logback-spring.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\orquestrador\pom.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Modulo3.Geracao\Templates\orquestrador\RestClientServices.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Remove="Resources\stored-procedures-upload\spc_GetProgramaByCod.sql" />
+  </ItemGroup>
+
+
+</Project>

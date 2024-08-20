@@ -1,0 +1,138 @@
+<app-breadcrumb currentLabel="Microservices - Code Generation"></app-breadcrumb>
+
+<div class="custom-class">
+  <header class="app-page-header">
+    <h1 class="app-use-case">Microservices</h1>
+    <h2 class="app-page-title">Generation</h2>
+  </header>
+  <form #formGeracao="ngForm">
+    <section class="app-box">
+      <mat-accordion [togglePosition]="'before'">
+        <mat-expansion-panel (afterExpand)="aposExpandir1()" [expanded]="expandiu1">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h3 class="app-filter-title">Fill in the Project Metadata fields</h3>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <!--    <div class="app-box-body">-->
+          <div class="app-box-body app-grid-5-colunas">
+            <mat-form-field>
+              <mat-label>Java Version</mat-label>
+              <input #javaVersionFormControl="ngModel" [(ngModel)]="geracaoDto.projectMetadataJavaVersion"
+                     autocomplete="off" id="java-version"
+                     matInput name="projectMetadataJavaVersion" pattern="^17|20|21|22$" required type="text">
+              <mat-error
+                *ngIf="javaVersionFormControl.invalid">
+                {{ retornaMensagemDeErroCampoInvalido(javaVersionFormControl) }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Project Metadata Group</mat-label>
+              <input (ngModelChange)="atualizarPackageName()" [(ngModel)]="geracaoDto.projectMetadataGroupId"
+                     autocomplete="off"
+                     id="projectMetadata-group"
+                     matInput name="projectMetadataGroup" type="text">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Project Metadata Artifact</mat-label>
+              <input (ngModelChange)="atualizarPackageName()" [(ngModel)]="geracaoDto.projectMetadataArtifactId"
+                     autocomplete="off"
+                     id="projectMetadata-artifact"
+                     matInput name="projectMetadataArtifact" type="text">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Project Metadata PackageName</mat-label>
+              <input [(ngModel)]="geracaoDto.projectMetadataPackageName" autocomplete="off"
+                     disabled id="projectMetadata-packageName"
+                     matInput name="projectMetadataPackageName" type="text">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Spring Boot Version</mat-label>
+              <input [(ngModel)]="geracaoDto.springBootVersion" autocomplete="off" disabled id="spring-boot-version"
+                     matInput name="springBootVersion" type="text">
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-accordion [togglePosition]="'before'">
+        <mat-expansion-panel (afterExpand)="aposExpandir2()" [expanded]="expandiu2">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h3 class="app-filter-title">Fill in the Config fields</h3>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="app-box-body app-grid-5-colunas">
+            <mat-form-field>
+              <mat-label>Consul Host</mat-label>
+              <input [(ngModel)]="geracaoDto.consulHost" autocomplete="off" id="consul-host" matInput
+                     name="consulHost" type="text">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Consul Port</mat-label>
+              <input [(ngModel)]="geracaoDto.consulPort" autocomplete="off" id="consul-port" matInput
+                     name="consulPort" type="text">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Gateway Port</mat-label>
+              <input [(ngModel)]="geracaoDto.gatewayPort" autocomplete="off" id="gateway-port" matInput
+                     name="gatewayPort" type="text">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Orchestrator Port</mat-label>
+              <input [(ngModel)]="geracaoDto.orchestratorPort" autocomplete="off" id="orchestrator-port" matInput
+                     name="orchestratorPort" type="text">
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-accordion [togglePosition]="'before'">
+        <mat-expansion-panel (afterExpand)="aposExpandir3()" [expanded]="expandiu3">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h3 class="app-filter-title">Fill in the Database fields</h3>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="app-box-body app-grid-5-colunas">
+            <mat-form-field>
+              <mat-label>Database Host</mat-label>
+              <input [(ngModel)]="geracaoDto.databaseHost" autocomplete="off" id="database-host" matInput
+                     name="databaseHost" type="text">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Database Port</mat-label>
+              <input [(ngModel)]="geracaoDto.databasePort" autocomplete="off" id="database-port" matInput
+                     name="databasePort" type="text">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Database Name</mat-label>
+              <input [(ngModel)]="geracaoDto.databaseName" autocomplete="off" id="database-name" matInput
+                     name="databaseName" type="text">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Database User Name</mat-label>
+              <input [(ngModel)]="geracaoDto.databaseUserName" autocomplete="off" id="user-name" matInput
+                     name="databaseUserName" type="text">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Database Password</mat-label>
+              <input [(ngModel)]="geracaoDto.databasePassword" autocomplete="off" id="database-password" matInput
+                     name="databasePassword" type="password">
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <div class="app-box-body">
+        <button (click)="abrirModalConfirmcao()" [disabled]="!servidorDisponivel || formGeracao.invalid" appBtn class="primary-action"
+                icon="fa-download"
+                id="btn-gerar" label="Generate"></button>
+
+        <button (click)="limparFormulario(formGeracao)" appBtn class="secondary-action" icon="fa-eraser" id="btn-limpar"
+                label="Clean"></button>
+
+        <button [routerLink]="['/home']" appBtn icon="fa-reply" label="Return"></button>
+      </div>
+    </section>
+  </form>
+</div>

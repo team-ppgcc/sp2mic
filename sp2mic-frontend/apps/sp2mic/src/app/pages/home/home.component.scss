@@ -1,0 +1,88 @@
+@import '../../styles/_app-variables.scss';
+@import '../../styles/_app-mixins.scss';
+
+.logo-container {
+  display: grid;
+  grid-template-columns: 140px 100px;
+  grid-template-rows: 40px 24px;
+  grid-template-areas: "logo description" "module module";
+  align-items: center;
+  grid-gap: 0;
+}
+
+.app-module {
+  grid-area: module;
+  font-family: 'Segoe', sans-serif;
+  font-weight: 100;
+  font-size: 18px;
+  letter-spacing: 1.5px;
+  color: darken($themeColor, 10%);
+  @include anti-aliasing();
+}
+
+.app-box {
+  max-width: 900px;
+  margin: 3em auto;
+}
+
+.app-box-body {
+  padding: 1em 3em 3em 3em;
+  width: 90%;
+  overflow: auto;
+  height: 600px;
+}
+
+.app-box > header > img {
+  width: 110px;
+}
+
+h3 {
+  text-align: center;
+  margin: 1em 1em 1em 1em;
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.text-columns {
+  margin-top: 30px;
+  text-align: justify;
+  columns: 150px 2;
+  column-gap: 50px;
+}
+
+p {
+  font-size: px2em(15);
+  text-indent: 2em;
+}
+
+ul {
+  font-size: px2em(15);
+}
+
+.espaco {
+  margin-top: 65px;
+}
+
+.header-apresentacao {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  align-items: center;
+  grid-column-gap: 2em;
+}
+
+.apresentacao {
+  font-weight: 300;
+  text-align: left;
+  margin: .15em 0;
+}
+
+.sp2mic-small {
+  font-weight: 300;
+  font-size: 14px;
+  text-align: left;
+  margin: 0;
+}
+
+.tutorial {
+  text-align: center;
+}

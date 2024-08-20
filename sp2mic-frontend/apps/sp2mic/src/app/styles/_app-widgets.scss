@@ -1,0 +1,307 @@
+@import 'app-variables';
+@import 'app-mixins';
+
+.app-prototype {
+  @include prototype;
+}
+
+/* BOX*/
+.app-box {
+  position: relative;
+  width: 98%;
+  background: white;
+  border-radius: .2em;
+  border-top: px2em(3) solid $themeColor;
+  margin-bottom: px2em(5);
+  padding-top: px2em(10);
+  padding-left: px2em(10);
+  padding-right: px2em(10);
+  box-shadow: 0 px2em(1) px2em(1) rgba(0, 0, 0, .1);
+}
+
+.app-box-modal {
+  position: relative;
+  width: 97%;
+  background: white;
+  border-radius: .2em;
+  border-top: px2em(3) solid $themeColor;
+  margin-bottom: px2em(20);
+  padding: px2em(10);
+  box-shadow: 0 px2em(1) px2em(1) rgba(0, 0, 0, .1);
+}
+
+.app-box > header {
+  color: #444;
+  display: block;
+  font-size: px2em(16);
+  line-height: 1;
+  padding: 10px 0 10px 10px;
+  //padding-top: 10px;
+  //padding-bottom: 10px;
+  // padding: px2em(10, 14, 10);
+  position: relative;
+  border-style: solid;
+  border-color: $lineColor;
+  border-width: px2em(1, 14)
+}
+
+.app-box.app-box-highlight {
+  border-top: none;
+  margin-bottom: px2em(0);
+  padding-left: px2em(0);
+  padding-right: px2em(0);
+}
+
+.app-box.app-box-highlight > footer,
+.app-box.app-box-highlight > header {
+  border: none;
+  background-image: url('../../assets/img/template/trianglify-header-bg.svg');
+  background-position: center bottom;
+  color: white;
+  background-color: $themeColor;
+}
+
+.app-box.app-box-highlight > header {
+  border-radius: .2em .2em 0 0;
+}
+
+.app-box > .app-box-body {
+  //background-color: #001F3F;
+  padding: px2em(8);
+  border-radius: 0 0 .2em .2em;
+}
+
+//.app-box > footer {
+//  position: relative;
+//  top: px2em(0);
+//  border-top: px2em(1) solid $lineColor;
+//  padding: .75em;
+//  border-radius: 0 0 .2em .2em;
+//}
+
+footer {
+  position: relative;
+  top: px2em(0);
+  border-top: px2em(1) solid $lineColor;
+  padding: .75em;
+  border-radius: 0 0 .2em .2em;
+}
+
+/* MAIN CONTENT HEADER*/
+
+.app-page-header {
+  display: flex;
+  align-items: baseline;
+  flex-flow: wrap;
+  //margin-top: 1em;
+  //margin-left: 1em;
+}
+
+h1.app-use-case {
+  font-size: px2em(23);
+  margin-right: 0.25em;
+  font-weight: normal;
+  color: $lightTextColor;
+}
+
+h2.app-page-title {
+  font-size: px2em(16);
+  font-weight: normal;
+  color: $lightTextColor;
+
+  &::before {
+    @include font-awesome($icon-utf-code: '\f101');
+    margin-right: .33em;
+  }
+}
+
+h3.app-filter-title {
+  font-size: px2em(15);
+  font-weight: normal;
+  color: $lightTextColor;
+}
+
+/** Grid **/
+.app-grid {
+  display: grid;
+  grid-gap: 1em;
+}
+
+.app-flex {
+  display: flex;
+}
+
+/** Buttons */
+.app-btn {
+  position: relative;
+  padding: .5em 1em;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: .25em;
+  width: fit-content;
+  color: $textColor;
+}
+
+.app-btn[disabled] {
+  opacity: 0.5;
+}
+
+.app-btn.primary-action {
+  color: white;
+  background: saturate($themeColor, 15%);
+}
+
+.app-btn.primary-action:hover {
+  background-color: saturate($themeColor, 55%);
+}
+
+
+.app-btn + .app-btn {
+  margin-left: .5em;
+}
+
+.app-btn > .app-btn-icon {
+  position: absolute;
+  height: 100%;
+  width: 2.5em;
+  background: rgba(0, 0, 0, 0.075);
+  top: 0;
+  left: 0;
+  line-height: 2.5;
+  border-radius: .25em 0 0 .25em;
+  text-align: center;
+}
+
+.app-btn.app-btn-icon-right > .app-btn-icon {
+  left: unset;
+  border-radius: 0 .25em .25em 0;
+  right: 0;
+}
+
+.app-btn > .app-btn-icon + .app-btn-label {
+  margin-left: 2.25em;
+  height: 100%;
+  line-height: 1.5;
+  display: block;
+}
+
+.app-btn.app-btn-icon-right > .app-btn-icon + .app-btn-label {
+  margin-left: unset;
+  margin-right: 2.25em;
+}
+
+.app-btn.app-btn-mini > .app-btn-icon {
+  width: 2em;
+  line-height: 1.75;
+}
+
+
+/** DataTables **/
+.app-datatable {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1.5em;
+}
+
+.app-datatable > thead > tr > th {
+  position: relative;
+  border-bottom: 3px solid $themeColor;
+  text-align: center;
+  color: $textColor;
+  font-weight: normal;
+  font-size: px2em(16, 14);
+  padding: .2em px2em(2);
+}
+
+.app-datatable > tbody > tr > td {
+  position: relative;
+  text-align: center;
+  border-bottom: 0.5px solid #ccc;
+  padding: .2em px2em(6, 8);
+  height: px2em(14, 14);
+}
+
+.app-datatable > tbody > tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.033);
+}
+
+.app-datatable > tbody > tr:nth-child(even) {
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: rgba(0, 0, 0, 0.033);
+  }
+}
+
+.app-datatable > tbody > tr > td + td,
+.app-datatable > thead > tr > th + th {
+  &::before {
+    @include pseudo;
+    width: 1px;
+    height: calc(100% - 20px);
+    background: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    left: 0;
+    top: 5px;
+    bottom: 0;
+  }
+}
+
+.app-datatable > tbody > tr > td > a {
+  color: inherit;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: darken($linkColor, 8%);
+  }
+}
+
+/** **/
+.app-empty-search-result {
+  padding: 1em;
+  color: darken($orange, 10%);
+}
+
+/** inputs **/
+fieldset {
+  border: none;
+  padding: 0;
+}
+
+fieldset label {
+  display: block;
+}
+
+fieldset input {
+  width: calc(100% - 1em);
+  padding: 0.25em .5em;
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: #999;
+
+  &:active,
+  &:focus {
+    border-color: $themeColor;
+    outline: none;
+  }
+}
+
+$outdoorGradientInit: hsl(400, 30%, 90%);
+$outdoorGradientEnd: adjust-hue(hsl(120, 30%, 90%), 60deg);
+
+form {
+  display: block;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+header {
+  color: #444;
+  font-size: px2em(16);
+  line-height: 1;
+  padding: 10px 0 10px 10px;
+  //padding-top: 10px;
+  //padding-bottom: 10px;
+  // padding: px2em(10, 14, 10);
+  position: relative;
+}

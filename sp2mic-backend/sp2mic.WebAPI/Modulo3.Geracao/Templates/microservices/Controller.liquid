@@ -1,0 +1,29 @@
+package {{nomePacote}}.controller;
+
+
+import {{nomePacote}}.repository.{{nomeMicrosservicoComInicialMaiuscula}}Repository;
+import org.springframework.web.bind.annotation.RestController;
+{%- for imp in imports -%}
+import {{imp -}};
+{%- endfor -%}
+
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequiredArgsConstructor
+public class {{nomeMicrosservicoComInicialMaiuscula}}Controller {
+
+    private final {{nomeMicrosservicoComInicialMaiuscula}}Repository repository;
+
+{%- for ep in endpoints -%}
+    {{ep.TipoHttpMapping}}("{{ep.Path}}{{ep.ParametrosPath}}")
+    public {{ep.RetornoMetodo}} {{ep.NomeMetodo}}({{ep.ParametrosController}}) {
+  {%- if ep.PossuiRetorno -%}
+        return repository.{{ep.NomeMetodo}}({{ep.ParametrosChamada}});
+  {%- else -%}
+        repository.{{ep.NomeMetodo}}({{ep.ParametrosChamada}});
+  {%- endif -%}
+    }
+
+{%- endfor -%}
+}

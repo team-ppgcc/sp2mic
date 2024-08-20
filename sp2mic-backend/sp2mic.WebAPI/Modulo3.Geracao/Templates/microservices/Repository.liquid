@@ -1,0 +1,54 @@
+package {{nomePacote}}.repository;
+
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Repository;
+{%- for imp in imports -%}
+import {{imp -}};
+{%- endfor -%}
+
+
+@Repository
+public class {{nomeMicrosservicoComInicialMaiuscula}}Repository {
+
+    @PersistenceContext
+    private EntityManager em;
+
+{%- for ep in endpoints -%}
+    @Transactional
+    {%- if ep.IsRetornoLista == true -%}
+    @SuppressWarnings("unchecked")
+    {%- endif -%}
+    public {{ep.RetornoMetodo}} {{ep.NomeMetodo}}({{ep.TipoNomeParametros}}) {
+
+        String sql = """
+                   {{ep.Texto}}
+                   """;
+
+     {%- if ep.IsRetornoDTO == true -%}
+        var query = em.createNativeQuery(sql);
+    {%- endif -%}
+    {%- if ep.IsRetornoDTO == false -%}
+        var query = em.createNativeQuery(sql);
+    {%- endif -%}
+    {%- for p in ep.Parametros -%}
+        query.setParameter("{{p.NomeVariavel}}", {{p.NomeVariavel}});
+    {%- endfor -%}
+
+    {%- if ep.PossuiRetorno == true and ep.IsRetornoLista == true -%}
+        List<Object[]> rows = query.getResultList();
+        List<{{ep.NomeClasseRetorno}}> result = new ArrayList<>(rows.size());
+        for (Object[] row : rows) {
+            result.add(new {{ep.NomeClasseRetorno}}({{ep.AtributosCast}}));
+        }
+        return result;
+    {%- endif -%}
+    {%- if ep.PossuiRetorno == true and ep.RetornoMetodo != 'void' and ep.IsRetornoLista == false -%}
+        return ({{ep.RetornoMetodo}}) query.getSingleResult();
+    {%- endif -%}
+    }
+
+{%- endfor -%}
+}

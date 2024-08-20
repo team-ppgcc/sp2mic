@@ -1,0 +1,55 @@
+@import 'app-variables';
+
+.mat-form-field {
+  width: 100%;
+  font-size: 12px;
+}
+
+.mat-header-row {
+  justify-content: center;
+  text-align: center;
+}
+
+.mat-row {
+  justify-content: center;
+  text-align: center;
+}
+
+.mat-header-cell {
+  justify-content: center;
+  text-align: center;
+}
+
+.mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-input-element:disabled {
+  color: #808080;
+}
+
+.mat-select-disabled .mat-select-value {
+  color: #808080;
+}
+
+::ng-deep .mat-autocomplete-panel mat-option {
+  font-size: 14px;
+}
+
+::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+  stroke: $sp2mic;
+}
+
+
+.classe {
+  margin-top: -12px;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: $themeColor;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: $themeColor;
+}

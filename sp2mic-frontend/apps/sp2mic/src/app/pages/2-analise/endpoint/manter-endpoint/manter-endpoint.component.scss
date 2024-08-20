@@ -1,0 +1,42 @@
+@import '../../../../styles/_app-variables.scss';
+@import "../../../../../app/styles/_custom-angular-material.scss";
+
+%base-grid-100 {
+  display: grid;
+  grid-gap: 1em;
+  width: 100%;
+}
+
+.app-grid-4-colunas {
+  @extend %base-grid-100;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.app-grid-2-colunas-mescladas {
+  display: grid;
+  grid-gap: 1em;
+  width: 82%;
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+.app-grid-4-colunas-mescladas {
+  display: grid;
+  grid-gap: 1em;
+  width: 82%;
+  grid-template-columns: 4fr;
+}
+
+.app-grid-3-colunas {
+  @extend %base-grid-100;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.app-box-view {
+  padding-left: 50px;
+  font-family: "JetBrains Mono", "JetBrains Mono Light", serif;
+}
+
+.app-grid-analyzed {
+  width: 40%;
+  margin-right: 10px;
+}

@@ -1,0 +1,15 @@
+@import '@fortawesome/fontawesome-free/css/all.css';
+
+.app-grid {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.app-grid-2 {
+  display: grid;
+  grid-gap: 1em;
+  width: 100%;
+  grid-template-columns: 2fr 1fr;
+}
+.mat-icon.fa {
+  font-size: 23px;
+}

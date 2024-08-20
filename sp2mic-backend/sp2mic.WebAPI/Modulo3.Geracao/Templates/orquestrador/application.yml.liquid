@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: orchestrator
+  profiles:
+    active: zone1
+
+server:
+  port: {{orchestratorPort}}
+
+{%- for m in microsservicos -%}
+servico:
+  {{m.NomeTodoMinusculo}}:
+    url: {{gatewayHost}}:{{gatewayPort}}/{{m.NomeTodoMinusculo}}
+{%- endfor -%}

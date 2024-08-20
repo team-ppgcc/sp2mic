@@ -1,0 +1,7 @@
+.app-grid {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 4fr));
+}
+
+.file-input {
+  display: none;
+}

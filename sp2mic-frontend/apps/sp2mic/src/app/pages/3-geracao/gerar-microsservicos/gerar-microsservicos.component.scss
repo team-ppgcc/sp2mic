@@ -1,0 +1,37 @@
+@import "../../../../app/styles/_custom-angular-material.scss";
+
+.app-grid {
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+%base-grid-100 {
+  display: grid;
+  grid-gap: 1em;
+  width: 100%;
+}
+
+.app-grid-5-colunas {
+  @extend %base-grid-100;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.app-grid-1-2-colunas {
+  @extend %base-grid-100;
+  grid-template-columns: 1fr 2fr;
+}
+
+.app-grid-3-colunas {
+  @extend %base-grid-100;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.app-grid-4-colunas {
+  @extend %base-grid-100;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+p {
+  margin-left: 10px;
+  color: red;
+}

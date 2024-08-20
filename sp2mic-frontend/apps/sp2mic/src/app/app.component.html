@@ -1,0 +1,89 @@
+<mat-toolbar class="toolbar-sp2mic">
+  <button (click)="isExpanded = !isExpanded;" class="button-menu"
+          id="menu51" mat-icon-button matTooltip="Menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <a [routerLink]="['']">
+    <img alt="Logotipo da SP2MIC" class="img-logo-sp2mic"
+         src="../assets/img/template/FullLogo_Transparent_NoBuffer_1.png" height="287" width="1280">
+  </a>
+  <span class="flexExpand"></span>
+  <div>
+    <a href="http://www.uece.br/gesad/" target="_blank">
+      <img alt="Logotipo do Gesad" class="img-logo-gesad"
+           src="../assets/img/template/gesad.png" height="377" width="1279">
+    </a>
+  </div>
+  <div>
+    <a href="http://www.uece.br/ppgcc/" target="_blank">
+      <img alt="Logotipo do PPGCC" class="img-logo-ppgcc"
+           src="../assets/img/template/Logo-PPGCC-Oficial-30.png" height="1749" width="6707">
+    </a>
+  </div>
+  <div>
+    <a href="http://www.uece.br/" target="_blank">
+      <img alt="Logotipo da UECE" class="img-logo-uece"
+           src="../assets/img/template/LogoUeceHorizontalAltaResoluçãoBranco.png" height="974" width="3283">
+    </a>
+  </div>
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container" autosize>
+  <mat-sidenav #sidenav class="sidenav" mode="side" [opened]=openedTtrue (mouseenter)="mouseenter()" (mouseleave)="mouseleave()">
+    <mat-nav-list>
+      <div *ngIf="isExpanded"><h2 class="app-module-title">SP Loading and Processing</h2></div>
+      <mat-list-item routerLink="/load"
+                     routerLinkActive="active">
+        <div class="menu-expanded">
+          <mat-icon svgIcon="database" matTooltip="Database Connection"></mat-icon>
+          <div *ngIf="isExpanded" class="sidenav-item">
+            <span class="menu-item-title">DB Connection</span>
+          </div>
+        </div>
+      </mat-list-item>
+      <mat-divider class="menu-divider"></mat-divider>
+      <div *ngIf="isExpanded"><h2 class="app-module-title">Analysis</h2></div>
+      <mat-list-item routerLink="/analysis/stored-procedure"
+                     routerLinkActive="active">
+        <div class="menu-expanded">
+          <mat-icon matTooltip="Stored Procedures">table_view</mat-icon>
+          <div *ngIf="isExpanded" class="sidenav-item">
+            <span class="menu-item-title">Stored Procedures</span>
+          </div>
+        </div>
+      </mat-list-item>
+      <mat-list-item routerLink="/analysis/microsservico"
+                     routerLinkActive="active">
+        <div class="menu-expanded">
+          <mat-icon matTooltip="Microservices">dashboard_customize</mat-icon>
+          <div *ngIf="isExpanded" class="sidenav-item">
+            <span class="menu-item-title">Microservices</span>
+          </div>
+        </div>
+      </mat-list-item>
+      <mat-list-item routerLink="/analysis/dto-classe" routerLinkActive="active">
+        <div class="menu-expanded">
+          <mat-icon matTooltip="DTO Class">class</mat-icon>
+          <div *ngIf="isExpanded" class="sidenav-item">
+            <span class="menu-item-title">DTO Class</span>
+          </div>
+        </div>
+      </mat-list-item>
+
+      <mat-divider class="menu-divider"></mat-divider>
+      <div *ngIf="isExpanded"><h2 class="app-module-title">Code Generation</h2></div>
+      <mat-list-item routerLink="/generation/microsservicos"
+                     routerLinkActive="active">
+        <div class="menu-expanded">
+          <mat-icon matTooltip="Code Generation">settings</mat-icon>
+          <div *ngIf="isExpanded" class="sidenav-item">
+            <span class="menu-item-title">Microservices</span>
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-spinner></app-spinner>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

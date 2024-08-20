@@ -1,0 +1,49 @@
+@import '../../../../app/styles/_custom-angular-material.scss';
+@import '../../../../app/styles/_app-mixins.scss';
+
+a.goto,
+:host ::ng-deep a.goto {
+  color: $sp2mic;
+  text-decoration: underline;
+
+  @include hover-active-focus {
+    color: darken($linkColor, 15%);
+  }
+}
+
+nav {
+  display: inline-block;
+  margin-left: 1em;
+}
+
+ol {
+  @include inline-flex-list();
+  background: rgba(0, 0, 0, 0.025);
+  box-shadow: 0 px2em(1) px2em(1) rgba(0, 0, 0, .1);
+}
+
+li {
+  position: relative;
+  margin-left: px2em(24);
+
+  &:not(:last-child) {
+    &::after {
+      @include pseudo($content: '»');
+      top: 0;
+      right: px2em(-16);
+      color: $lightTextColor;
+    }
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    color: $lightTextColor;
+  }
+}
+
+.icone-home {
+  color: $sp2mic;
+}

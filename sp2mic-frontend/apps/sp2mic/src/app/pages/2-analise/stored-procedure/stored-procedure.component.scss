@@ -1,0 +1,36 @@
+@import '../../../styles/_app-variables.scss';
+@import '@fortawesome/fontawesome-free/css/all.css';
+
+%base-grid-100 {
+  display: grid;
+  grid-gap: 1em;
+  width: 80%;
+}
+
+.app-grid {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+//.app-grid {
+//  display: grid;
+//  grid-gap: 1em;
+//  width: 100%;
+//  grid-template-columns: 2fr 1fr 1fr 1fr;
+//}
+
+.app-grid-2-colunas {
+  @extend %base-grid-100;
+  grid-template-columns: 1fr 1fr;
+}
+
+.color-icon-button {
+  color: $themeColor;
+}
+
+.mat-icon.fa {
+  font-size: 23px;
+}
+
+.full-width {
+  width: 100%;
+}

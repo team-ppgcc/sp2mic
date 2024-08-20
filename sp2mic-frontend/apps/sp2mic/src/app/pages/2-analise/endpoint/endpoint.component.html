@@ -1,0 +1,207 @@
+<app-breadcrumb currentLabel="Endpoints Search"></app-breadcrumb>
+
+<div class="custom-class">
+  <header class="app-page-header">
+    <h1 class="app-use-case">Endpoints</h1>
+    <h2 class="app-page-title">Search</h2>
+  </header>
+
+  <section class="app-box">
+    <form #formEndpoint="ngForm">
+      <mat-accordion [togglePosition]="'before'">
+        <mat-expansion-panel (afterExpand)="aposExpandir()" [expanded]="expandiu">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h3 class="app-filter-title">Search Filters</h3>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="app-box-body app-grid">
+
+            <mat-form-field>
+              <mat-label>Method Name</mat-label>
+              <input [(ngModel)]="endpointFilter.noMetodoEndpoint" autocomplete="off" id="noMetodoEndpoint" matInput
+                     maxlength="200" name="noMetodoEndpoint" type="text">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Path</mat-label>
+              <input [(ngModel)]="endpointFilter.noPath" autocomplete="off" id="noPath" matInput maxlength="200"
+                     name="noPath" type="text">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Analyzed</mat-label>
+              <mat-select [(ngModel)]="endpointFilter.snAnalisado" id="combo-snAnalisado"
+                          name="snAnalisado">
+                <mat-option></mat-option>
+                <mat-option [value]="true">Yes</mat-option>
+                <mat-option [value]="false">No</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Stored Procedure</mat-label>
+              <mat-select [(ngModel)]="endpointFilter.idStoredProcedure" id="combo-procedure"
+                          name="idProcedure">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let valor of valoresComboProcedure; index as i" [value]=valor.id>
+                  {{ valor.noStoredProcedure }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Microservice</mat-label>
+              <mat-select [(ngModel)]="endpointFilter.idMicrosservico" id="combo-microsservico"
+                          name="idMicrosservico">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let valor of valoresComboMicrosservico; index as i" [value]=valor.id>
+                  {{ valor.noMicrosservico }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <footer>
+        <button (click)="buscar()" appBtn class="primary-action" icon="fa-search"
+                id="btn-endpointr"
+                label="Search"></button>
+        <button (click)="limpar(formEndpoint)" appBtn class="secondary-action" icon="fa-eraser" id="btn-limpar"
+                label="Clean"></button>
+        <button (click)="inserirEndpoint()" appBtn class="primary-action" icon="fa-plus"
+                label="Insert"></button>
+        <button (click)="retornar()" appBtn icon="fa-reply" label="Return"></button>
+      </footer>
+    </form>
+    <header *ngIf="pesquisou">Search results: {{ endpoints.length }} record(s)</header>
+
+    <div [hidden]="(endpoints.length === 0 || !pesquisou)" class="app-box-body scroll">
+
+      <table [dataSource]="dataSourceEndpoints" [hidden]="(endpoints.length === 0 || !pesquisou)"
+             aria-label="Tabela de Endpoints" class="app-datatable align-center" mat-table matSort matSortDisableClear>
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+
+        <ng-container class="colunaAnlisado" matColumnDef="snAnalisado">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Analyzed</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['edit', row.id]" id="col-0-edit_endpoint{{ i }}">
+              <span *ngIf="row.snAnalisado" class="analisado">{{ rotuloBoolean(row.snAnalisado) }}</span>
+              <span *ngIf="!row.snAnalisado" class="nao-analisado">{{ rotuloBoolean(row.snAnalisado) }}</span>
+            </a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="noStoredProcedure">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Stored Procedure</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a *ngIf="row.idStoredProcedureNavigation !== undefined" [routerLink]="['edit', row.id]"
+               id="col-1-edit_endpoint{{ i }}"> {{ row.idStoredProcedureNavigation.noStoredProcedure }}</a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="noMicrosservico">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Microservice</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a *ngIf="row.idMicrosservicoNavigation !== undefined" [routerLink]="['edit', row.id]"
+               id="col-2-edit_endpoint{{ i }}">{{ row.idMicrosservicoNavigation.noMicrosservico }}</a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="noMetodoEndpoint">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Method Name</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a *ngIf="row.noMetodoEndpoint !== 'nomeAindaNaoDefinido'" [routerLink]="['edit', row.id]"
+               id="col-3-edit_endpoint{{ i }}">{{ row.noMetodoEndpoint }}</a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="noPath">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Path</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a *ngIf="row.noPath !== '/path-ainda-nao-definido'" [routerLink]="['edit', row.id]"
+               id="col-4-edit_endpoint{{ i }}">{{ row.noPath }}</a></td>
+        </ng-container>
+
+        <ng-container matColumnDef="noTipoDadoRetorno">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Returned Type</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['edit', row.id]" id="col-5-edit_endpoint{{ i }}">
+              {{ row.noTipoDadoRetorno }}</a>
+            <!--              {{getRetorno(row.)}}</a>-->
+          </td>
+        </ng-container>
+
+        <!--        <ng-container matColumnDef="noVariavelRetornada">-->
+        <!--          <th *matHeaderCellDef mat-header-cell mat-sort-header>Returned Variable</th>-->
+        <!--          <td *matCellDef="let row; let i = index" mat-cell>-->
+        <!--            <a [routerLink]="['edit', row.id]" id="col-6-edit_endpoint{{ i }}">-->
+        <!--&lt;!&ndash;              {{row.idVariavelRetornadaNavigation.noVariavel}}</a>&ndash;&gt;-->
+        <!--              {{getRetornoVariavel(row)}}</a>-->
+        <!--          </td>-->
+        <!--        </ng-container>-->
+
+        <!--        <ng-container matColumnDef="snRetornoLista">-->
+        <!--          <th *matHeaderCellDef mat-header-cell mat-sort-header>Is a list returned?</th>-->
+        <!--          <td *matCellDef="let row; let i = index" mat-cell>-->
+        <!--            <a [routerLink]="['edit', row.id]" id="col-7-edit_endpoint{{ i }}">-->
+        <!--              {{rotuloBoolean(row.snRetornoLista)}}</a>-->
+        <!--          </td>-->
+        <!--        </ng-container>-->
+
+        <ng-container class="colunaTipoEndpoint" matColumnDef="noTipoSqlDml">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>SQL</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['edit', row.id]" id="col-6-edit_endpoint{{ i }}">
+              {{ row.noTipoSqlDml }}</a>
+            <!--              {{rotuloTipoSqlDml(row.coTipoSqlDml)}}</a>-->
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tabelasAssociadas">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>Tabelas</th>
+          <td *matCellDef="let row; let i = index" mat-cell>
+            <a [routerLink]="['edit', row.id]" id="col-7-edit_endpoint{{ i }}">
+              {{ row.tabelasAssociadas }}
+            </a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acao">
+          <th *matHeaderCellDef mat-header-cell></th>
+          <td *matCellDef="let row" mat-cell>
+            <button [routerLink]="['view', row.id]" class="primary-action" mat-icon-button
+                    matTooltip="View source code">
+              <mat-icon>visibility</mat-icon>
+            </button>
+
+            <button (click)="avisoDialog()" [routerLink]="['/analysis/endpoint/buscar-semelhanca', row.id]"
+                    class="primary-action" mat-icon-button
+                    matTooltip="Search similar code">
+              <mat-icon>manage_search</mat-icon>
+            </button>
+
+            <button (click)="confirmDialog(row.id, row.noMetodoEndpoint)" class="primary-action" mat-icon-button
+                    matTooltip="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+      </table>
+
+      <div [hidden]="endpoints.length === 0">
+        <mat-paginator [pageSizeOptions]="opcoesTamanhoPagina" [pageSize]="tamanhoPaginaPadrao" showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </div>
+
+    <div *ngIf="endpoints.length === 0 && pesquisou" class="app-empty-search-result" role="alert">
+      <span>No record found.</span>
+    </div>
+  </section>
+
+</div>

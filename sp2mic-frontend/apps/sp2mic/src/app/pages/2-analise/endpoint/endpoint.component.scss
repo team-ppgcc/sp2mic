@@ -1,0 +1,18 @@
+@import '../../../styles/_app-variables.scss';
+
+.app-grid {
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.color-icon-button {
+  color: $themeColor;
+}
+
+.colunaAnlisado {
+  width: 60%;
+}
+
+.colunaTipoEndpoint {
+  width: 60%;
+}

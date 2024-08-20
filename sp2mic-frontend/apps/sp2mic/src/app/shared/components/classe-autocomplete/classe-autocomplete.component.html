@@ -1,0 +1,13 @@
+<mat-form-field>
+  <mat-label>Classe</mat-label>
+  <input (blur)="alterarClasseInput()" [formControl]="formControlClasse" [matAutocomplete]="auto"
+         [required]="obrigatorio" matInput maxlength="200"
+         type="text">
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="mudarClasse($event.option.value)"
+                    [displayWith]="displayClasse">
+    <mat-option *ngFor="let classe of classesFiltradas | async" [value]="classe">
+      <span>{{classe.noDtoClasse}}</span>
+    </mat-option>
+  </mat-autocomplete>
+  <mat-error *ngIf="obrigatorio">Required field</mat-error>
+</mat-form-field>

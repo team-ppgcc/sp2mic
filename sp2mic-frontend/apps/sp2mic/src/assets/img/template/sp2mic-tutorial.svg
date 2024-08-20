@@ -1,0 +1,93 @@
+<svg height="168px" version="1.1" viewBox="-0.5 -0.5 636 168" width="636px"
+     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs />
+  <g>
+    <rect fill="none" height="167" pointer-events="none" rx="25.05" ry="25.05" stroke="rgb(0, 0, 0)" width="635" x="0"
+          y="0" />
+    <image height="64.62" pointer-events="none" width="70" x="61.5"
+           xlink:href="https://app.diagrams.net/img/lib/clip_art/computers/Database_128x128.png"
+           y="27.19" />
+    <image height="80" pointer-events="none" width="80" x="274"
+           xlink:href="https://app.diagrams.net/img/lib/clip_art/computers/Software_128x128.png"
+           y="19.5" />
+    <g transform="translate(-0.5 -0.5)">
+      <switch>
+        <foreignObject height="100%" pointer-events="none" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+                       style="overflow: visible; text-align: left;"
+                       width="100%">
+          <div style="display: flex; align-items: unsafe flex-start; justify-content: unsafe flex-start; width: 77px; height: 1px; padding-top: 134px; margin-left: 278px;"
+               xmlns="http://www.w3.org/1999/xhtml">
+            <div data-drawio-colors="color: rgb(0, 0, 0); "
+                 style="box-sizing: border-box; font-size: 0px; text-align: left;">
+              <div
+                style="display: inline-block; font-size: 13px; font-family: Verdana; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">
+                <font style="font-size: 14px;">2. Analysis</font></div>
+            </div>
+          </div>
+        </foreignObject>
+        <text fill="rgb(0, 0, 0)" font-family="Verdana" font-size="13px" x="278" y="147">2. Analysis</text>
+      </switch>
+    </g>
+    <image height="80" pointer-events="none" width="80" x="482.5"
+           xlink:href="https://app.diagrams.net/img/lib/clip_art/general/Full_Folder_128x128.png"
+           y="19.5" />
+    <g transform="translate(-0.5 -0.5)">
+      <switch>
+        <foreignObject height="100%" pointer-events="none" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+                       style="overflow: visible; text-align: left;"
+                       width="100%">
+          <div style="display: flex; align-items: unsafe flex-start; justify-content: unsafe flex-start; width: 141px; height: 1px; padding-top: 134px; margin-left: 468px;"
+               xmlns="http://www.w3.org/1999/xhtml">
+            <div data-drawio-colors="color: rgb(0, 0, 0); "
+                 style="box-sizing: border-box; font-size: 0px; text-align: left;">
+              <div
+                style="display: inline-block; font-size: 13px; font-family: Verdana; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">
+                <font style="font-size: 14px;">3. Code Generation</font></div>
+            </div>
+          </div>
+        </foreignObject>
+        <text fill="rgb(0, 0, 0)" font-family="Verdana" font-size="13px" x="468" y="147">3. Code Generation</text>
+      </switch>
+    </g>
+    <g transform="translate(-0.5 -0.5)">
+      <switch>
+        <foreignObject height="100%" pointer-events="none" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+                       style="overflow: visible; text-align: left;"
+                       width="100%">
+          <div style="display: flex; align-items: unsafe flex-start; justify-content: unsafe flex-start; width: 110px; height: 1px; padding-top: 120px; margin-left: 55px;"
+               xmlns="http://www.w3.org/1999/xhtml">
+            <div data-drawio-colors="color: rgb(0, 0, 0); "
+                 style="box-sizing: border-box; font-size: 0; text-align: left;">
+              <div
+                style="display: inline-block; font-size: 13px; font-family: Verdana; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: none; white-space: normal; overflow-wrap: normal;">
+                <font style="font-size: 14px;">1. SP Loading <br />and Processing</font></div>
+            </div>
+          </div>
+        </foreignObject>
+        <text fill="rgb(0, 0, 0)" font-family="Verdana" font-size="13px" x="55" y="133">1. SP Loading...</text>
+      </switch>
+    </g>
+    <path
+      d="M 429.57 36 L 456.87 55.1 L 429.57 74.2 L 429.57 63.46 C 407.16 63.46 389 76.98 389 93.65 C 389 67.74 407.16 46.74 429.57 46.74 Z"
+      fill="#000000" opacity="0.25" pointer-events="none" stroke="#000000"
+      stroke-miterlimit="10" transform="translate(2,3)rotate(25,422.93,64.83)" />
+    <path
+      d="M 429.57 36 L 456.87 55.1 L 429.57 74.2 L 429.57 63.46 C 407.16 63.46 389 76.98 389 93.65 C 389 67.74 407.16 46.74 429.57 46.74 Z"
+      fill="#f5f5f5" pointer-events="none" stroke="#666666" stroke-miterlimit="10"
+      transform="rotate(25,422.93,64.83)" />
+    <path
+      d="M 207.57 36 L 234.87 55.1 L 207.57 74.2 L 207.57 63.46 C 185.16 63.46 167 76.98 167 93.65 C 167 67.74 185.16 46.74 207.57 46.74 Z"
+      fill="#000000" opacity="0.25" pointer-events="none" stroke="#000000"
+      stroke-miterlimit="10" transform="translate(2,3)rotate(25,200.93,64.83)" />
+    <path
+      d="M 207.57 36 L 234.87 55.1 L 207.57 74.2 L 207.57 63.46 C 185.16 63.46 167 76.98 167 93.65 C 167 67.74 185.16 46.74 207.57 46.74 Z"
+      fill="#f5f5f5" pointer-events="none" stroke="#666666" stroke-miterlimit="10"
+      transform="rotate(25,200.93,64.83)" />
+  </g>
+  <switch>
+    <g requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" />
+    <a target="_blank" transform="translate(0,-5)"
+       xlink:href="https://www.diagrams.net/doc/faq/svg-export-text-problems">
+      <text font-size="10px" text-anchor="middle" x="50%" y="100%">Text is not SVG - cannot display</text>
+    </a></switch>
+</svg>
