@@ -1,11 +1,12 @@
 
-Artigo: SP2Mic: Uma ferramenta para geração de código de microsserviços a partir de stored procedures
+# Artigo: SP2Mic: Uma ferramenta para geração de código de microsserviços a partir de stored procedures
+
         Ingrid Guedes Teles Coutinho (UECE) <ingridteles@gmail.com>, 
         Paulo Henrique Mendes Maia (UECE) <pauloh.maia@uece.br>
 
 
 
-# sp2mic
+# SP2Mic
 A tool to migrate stored procedures to microservices.
 
 
